@@ -27,7 +27,7 @@ Src/%.o: ../Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed="__attribute__((__packed__))"' -DUSE_HAL_DRIVER -DSTM32L432xx -I"/home/nima/mechatronics/proj1/Inc" -I"/home/nima/mechatronics/proj1/Drivers/STM32L4xx_HAL_Driver/Inc" -I"/home/nima/mechatronics/proj1/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy" -I"/home/nima/mechatronics/proj1/Drivers/CMSIS/Device/ST/STM32L4xx/Include" -I"/home/nima/mechatronics/proj1/Drivers/CMSIS/Include" -I"/home/nima/mechatronics/proj1/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed="__attribute__((__packed__))"' -DUSE_HAL_DRIVER -DSTM32L432xx -I"/Users/nimaaghli/Documents/Couraea/MechatronicsClass/proj1/Inc" -I"/Users/nimaaghli/Documents/Couraea/MechatronicsClass/proj1/Drivers/STM32L4xx_HAL_Driver/Inc" -I"/Users/nimaaghli/Documents/Couraea/MechatronicsClass/proj1/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy" -I"/Users/nimaaghli/Documents/Couraea/MechatronicsClass/proj1/Drivers/CMSIS/Device/ST/STM32L4xx/Include" -I"/Users/nimaaghli/Documents/Couraea/MechatronicsClass/proj1/Drivers/CMSIS/Include" -I"/Users/nimaaghli/Documents/Couraea/MechatronicsClass/proj1/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

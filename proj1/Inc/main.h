@@ -58,6 +58,29 @@
 #define VCP_RX_GPIO_Port GPIOA
 #define LD3_Pin GPIO_PIN_3
 #define LD3_GPIO_Port GPIOB
+#define SEG_A_Pin GPIO_PIN_11
+#define SEG_A_Port GPIOA
+#define SEG_F_Pin GPIO_PIN_5
+#define SEG_F_Port GPIOB
+#define SEG_B_Pin GPIO_PIN_4
+#define SEG_B_Port GPIOB
+#define SEG_E_Pin GPIO_PIN_1
+#define SEG_E_Port GPIOA
+#define SEG_D_Pin GPIO_PIN_3
+#define SEG_D_Port GPIOA
+#define SEG_C_Pin GPIO_PIN_4
+#define SEG_C_Port GPIOA
+#define SEG_G_Pin GPIO_PIN_5
+#define SEG_G_Port GPIOA
+
+
+#define SEG_D1_Pin GPIO_PIN_9
+#define SEG_D1_Port GPIOA
+#define SEG_D2_Pin GPIO_PIN_10
+#define SEG_D2_Port GPIOA
+
+
+
 
 /* USER CODE BEGIN Private defines */
 
