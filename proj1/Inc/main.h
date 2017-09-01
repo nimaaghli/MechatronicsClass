@@ -79,7 +79,10 @@
 #define SEG_D2_Pin GPIO_PIN_10
 #define SEG_D2_Port GPIOA
 
-
+#define SEG_D3_Pin GPIO_PIN_6
+#define SEG_D3_Port GPIOB
+#define SEG_D4_Pin GPIO_PIN_7
+#define SEG_D4_Port GPIOA
 
 
 /* USER CODE BEGIN Private defines */

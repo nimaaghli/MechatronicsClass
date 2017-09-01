@@ -45,7 +45,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim7;
-
+TIM_HandleTypeDef htim6;
+uint32_t getUs(void);
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
@@ -55,8 +56,12 @@ TIM_HandleTypeDef htim7;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM7_Init(void);
+static void MX_TIM6_Init(void);
 int time=0;
-int ntime=9;
+int m=0;
+int mm=0;
+int mmm=0;
+int mmmm=0;
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
@@ -64,23 +69,45 @@ int ntime=9;
 
 /* USER CODE BEGIN 0 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if(htim->Instance==TIM7){
+	/*if(htim->Instance==TIM7){
 
-		/*SetSeg(time);
-		SetSeg(ntime);
-		time=time+1;
-		ntime--;
-		if(time==9){time=0;}
-		if(ntime==0){time=9;}*/
 		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
-		SetSeg(5);
+		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_SET);
+
+
+		SetSeg(mmmm);
 		HAL_GPIO_WritePin(SEG_D1_Port, SEG_D1_Pin, GPIO_PIN_RESET);
 
 		delayUs(1);
+
+
 		HAL_GPIO_WritePin(SEG_D1_Port, SEG_D1_Pin, GPIO_PIN_SET);
 
-		SetSeg(1);
+
+		SetSeg(mmm);
 		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_RESET);
+
+		delayUs(1);
+
+
+		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
+
+
+		SetSeg(mm);
+		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_RESET);
+
+
+		delayUs(1);
+
+
+		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_SET);
+
+		SetSeg(m);
+		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_RESET);
+
+		delayUs(1);
+
 
 		//HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
 
@@ -88,6 +115,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		//HAL_GPIO_TogglePin(LD3_GPIO_Port,LD3_Pin);
 		//HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
 
+	}*/
+	if(htim->Instance==TIM6){
+		HAL_GPIO_TogglePin(LD3_GPIO_Port,LD3_Pin);
 	}
 }
 
@@ -119,9 +149,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM7_Init();
+  MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim7);
+  HAL_TIM_Base_Start_IT(&htim6);
   //SetSeg(0);
   /* USER CODE END 2 */
 
@@ -130,6 +162,10 @@ int main(void)
   while (1)
   {
 
+
+
+
+	  //if(time==9){time=0;}
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -222,6 +258,31 @@ static void MX_TIM7_Init(void)
 
 }
 
+
+/* TIM6 init function */
+static void MX_TIM6_Init(void)
+{
+
+  TIM_MasterConfigTypeDef sMasterConfig;
+
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 800;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 50;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
+
 /** Configure pins as 
         * Analog 
         * Input 
@@ -288,6 +349,26 @@ static void MX_GPIO_Init(void)
    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
    HAL_GPIO_Init(SEG_D2_Port, &GPIO_InitStruct);
    HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_RESET);
+
+   /*Configure GPIO pin : SEG_D3_Pin */
+    GPIO_InitStruct.Pin = SEG_D3_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(SEG_D3_Port, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_RESET);
+
+    /*Configure GPIO pin : SEG_D4_Pin */
+     GPIO_InitStruct.Pin = SEG_D4_Pin;
+     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+     GPIO_InitStruct.Pull = GPIO_NOPULL;
+     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+     HAL_GPIO_Init(SEG_D4_Port, &GPIO_InitStruct);
+     HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_RESET);
+
+
+
+
 
 
 
