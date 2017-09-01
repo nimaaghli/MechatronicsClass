@@ -45,7 +45,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim7;
-TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim16;
 uint32_t getUs(void);
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
@@ -56,7 +56,7 @@ uint32_t getUs(void);
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM7_Init(void);
-static void MX_TIM6_Init(void);
+static void MX_TIM16_Init(void);
 int time=0;
 int m=0;
 int mm=0;
@@ -69,55 +69,34 @@ int mmmm=0;
 
 /* USER CODE BEGIN 0 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	/*if(htim->Instance==TIM7){
 
-		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_SET);
+	if(htim->Instance==TIM7){
 
+		m=time;
+		if(time==10){
+			time=0;
+			m=0;
+			mm++;
+		}
+		if(mm==10){
+			mm=0;
+			mmm++;
+		}
+		if(mmm==10){
 
-		SetSeg(mmmm);
-		HAL_GPIO_WritePin(SEG_D1_Port, SEG_D1_Pin, GPIO_PIN_RESET);
+			mmm=0;
+			mmmm++;
 
-		delayUs(1);
-
-
-		HAL_GPIO_WritePin(SEG_D1_Port, SEG_D1_Pin, GPIO_PIN_SET);
-
-
-		SetSeg(mmm);
-		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_RESET);
-
-		delayUs(1);
-
-
-		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
-
-
-		SetSeg(mm);
-		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_RESET);
+		}
+		if(mmmm==10){
+			mmmm=0;
+			NVIC_DisableIRQ(TIM7_IRQn);
 
 
-		delayUs(1);
 
+		}
+		time++;
 
-		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_SET);
-
-		SetSeg(m);
-		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_RESET);
-
-		delayUs(1);
-
-
-		//HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
-
-
-		//HAL_GPIO_TogglePin(LD3_GPIO_Port,LD3_Pin);
-		//HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
-
-	}*/
-	if(htim->Instance==TIM6){
-		HAL_GPIO_TogglePin(LD3_GPIO_Port,LD3_Pin);
 	}
 }
 
@@ -149,11 +128,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM7_Init();
-  MX_TIM6_Init();
+ // MX_TIM16_Init();
 
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim7);
-  HAL_TIM_Base_Start_IT(&htim6);
+  //HAL_TIM_Base_Start_IT(&htim16);
   //SetSeg(0);
   /* USER CODE END 2 */
 
@@ -162,6 +141,45 @@ int main(void)
   while (1)
   {
 
+	  	    HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
+	  		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_SET);
+	  		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_SET);
+	  		HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+
+
+	  		SetSeg(mmmm);
+	  		HAL_GPIO_WritePin(SEG_D1_Port, SEG_D1_Pin, GPIO_PIN_RESET);
+
+	  		delayUs(1);
+
+
+	  		HAL_GPIO_WritePin(SEG_D1_Port, SEG_D1_Pin, GPIO_PIN_SET);
+
+	  		HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+	  		SetSeg(mmm);
+
+	  		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_RESET);
+
+	  		delayUs(1);
+
+
+	  		HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
+	  		HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+
+	  		SetSeg(mm);
+
+	  		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_RESET);
+
+
+	  		delayUs(1);
+
+
+	  		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_SET);
+
+	  		SetSeg(m);
+	  		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_RESET);
+
+	  		delayUs(1);
 
 
 
@@ -241,9 +259,9 @@ static void MX_TIM7_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 1;
+  htim7.Init.Prescaler = 480000;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim7.Init.Period = 1;
+  htim7.Init.Period = 50;
   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -259,24 +277,17 @@ static void MX_TIM7_Init(void)
 }
 
 
-/* TIM6 init function */
-static void MX_TIM6_Init(void)
+/* TIM16 init function */
+static void MX_TIM16_Init(void)
 {
 
-  TIM_MasterConfigTypeDef sMasterConfig;
-
-  htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 800;
-  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 50;
-  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  htim16.Instance = TIM16;
+  htim16.Init.Prescaler = 48000;
+  htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim16.Init.Period = 5;
+  htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim16.Init.RepetitionCounter = 0;
+  if (HAL_TIM_Base_Init(&htim16) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
@@ -505,6 +516,7 @@ void SetSeg(int n){
 			HAL_GPIO_WritePin(SEG_E_Port, SEG_E_Pin, GPIO_PIN_RESET);//
 			HAL_GPIO_WritePin(SEG_F_Port, SEG_F_Pin, GPIO_PIN_RESET);//
 			HAL_GPIO_WritePin(SEG_G_Port, SEG_G_Pin, GPIO_PIN_RESET);//
+
 			break;
 		case 8:
 			HAL_GPIO_WritePin(SEG_A_Port, SEG_A_Pin, GPIO_PIN_SET);
@@ -524,6 +536,7 @@ void SetSeg(int n){
 			HAL_GPIO_WritePin(SEG_F_Port, SEG_F_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(SEG_G_Port, SEG_G_Pin, GPIO_PIN_SET);
 			break;
+
 
 
 	}
