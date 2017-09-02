@@ -36,7 +36,8 @@
 #include "stm32l4xx_it.h"
 
 /* USER CODE BEGIN 0 */
-
+#include <stdbool.h>
+bool stop=false;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -95,6 +96,49 @@ void TIM7_IRQHandler(void)
   /* USER CODE BEGIN TIM7_IRQn 1 */
 
   /* USER CODE END TIM7_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
+
+/* USER CODE END 1 */
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/******************************************************************************/
+/* STM32L4xx Peripheral Interrupt Handlers                                    */
+/* Add here the Interrupt Handlers for the used peripherals.                  */
+/* For the available peripheral interrupt handler names,                      */
+/* please refer to the startup file (startup_stm32l4xx.s).                    */
+/******************************************************************************/
+
+/**
+* @brief This function handles EXTI line[15:10] interrupts.
+*/
+void EXTI15_10_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+	for(int i=0;i<6500;++i);
+	  if (HAL_GPIO_ReadPin(PushButton_GPIO_Port, PushButton_Pin)) {
+		  if(stop==false){
+
+			  NVIC_EnableIRQ(TIM7_IRQn);
+
+			  stop=true;
+
+
+		  }else{
+
+			  NVIC_DisableIRQ(TIM7_IRQn);
+
+			  stop=false;
+		  }
+	  }
+	  else{
+
+	  }
+  /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_12);
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+
+  /* USER CODE END EXTI15_10_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
