@@ -38,6 +38,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32l4xx_hal.h"
+#include <stdbool.h>
 
 /* USER CODE BEGIN Includes */
 
@@ -62,6 +63,7 @@ int m=0;
 int mm=0;
 int mmm=0;
 int mmmm=0;
+bool stop=false;
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
@@ -141,7 +143,26 @@ int main(void)
   while (1)
   {
 
-	  	    HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
+
+	  if (HAL_GPIO_ReadPin(PushButton_GPIO_Port, PushButton_Pin)) {
+		  if(stop==false){
+
+			  NVIC_DisableIRQ(TIM7_IRQn);
+			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+			  stop=true;
+
+
+		  }else{
+
+			  NVIC_EnableIRQ(TIM7_IRQn);
+			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+			  stop=false;
+		  }
+	  }
+
+
+
+	  	    /*HAL_GPIO_WritePin(SEG_D2_Port, SEG_D2_Pin, GPIO_PIN_SET);
 	  		HAL_GPIO_WritePin(SEG_D3_Port, SEG_D3_Pin, GPIO_PIN_SET);
 	  		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_SET);
 	  		HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
@@ -179,7 +200,7 @@ int main(void)
 	  		SetSeg(m);
 	  		HAL_GPIO_WritePin(SEG_D4_Port, SEG_D4_Pin, GPIO_PIN_RESET);
 
-	  		delayUs(1);
+	  		delayUs(1);*/
 
 
 
@@ -261,7 +282,7 @@ static void MX_TIM7_Init(void)
   htim7.Instance = TIM7;
   htim7.Init.Prescaler = 480000;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim7.Init.Period = 50;
+  htim7.Init.Period = 500;
   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -437,6 +458,15 @@ static void MX_GPIO_Init(void)
          GPIO_InitStruct.Pull = GPIO_NOPULL;
          GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
          HAL_GPIO_Init(SEG_G_Port, &GPIO_InitStruct);
+
+
+         /*Configure GPIO pin : PushButton_Pin */
+         GPIO_InitStruct.Pin = PushButton_Pin;
+         GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+         GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+         HAL_GPIO_Init(PushButton_GPIO_Port, &GPIO_InitStruct);
+
 
 
 

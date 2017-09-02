@@ -85,6 +85,12 @@
 #define SEG_D4_Port GPIOA
 
 
+#define PushButton_Pin GPIO_PIN_12
+#define PushButton_GPIO_Port GPIOA
+
+
+
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
