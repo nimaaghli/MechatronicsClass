@@ -76,7 +76,7 @@ int mmmm=0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 	if(htim->Instance==TIM7){
-
+		HAL_GPIO_TogglePin(Debug_GPIO_Port,Debug_Pin);
 		m=time;
 		if(time==10){
 			time=0;
@@ -281,9 +281,9 @@ static void MX_TIM7_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 7780;
+  htim7.Init.Prescaler = 635;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim7.Init.Period = 40;
+  htim7.Init.Period = 500;
   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -304,9 +304,9 @@ static void MX_TIM16_Init(void)
 {
 
   htim16.Instance = TIM16;
-  htim16.Init.Prescaler = 48000;
+  htim16.Init.Prescaler = 80000; //80MHz clock for Tim7
   htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim16.Init.Period = 5;
+  htim16.Init.Period = 1;
   htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim16.Init.RepetitionCounter = 0;
   if (HAL_TIM_Base_Init(&htim16) != HAL_OK)
@@ -459,6 +459,13 @@ static void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(SEG_G_Port, &GPIO_InitStruct);
+
+	/*Configure GPIO pin : Debug_Pin */
+	GPIO_InitStruct.Pin = Debug_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(Debug_GPIO_Port, &GPIO_InitStruct);
 
 
 	/*Configure GPIO pin : PushButton_Pin */

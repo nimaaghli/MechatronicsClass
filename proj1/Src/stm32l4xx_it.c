@@ -115,7 +115,7 @@ void TIM7_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-	for(int i=0;i<6500;++i);
+	//for(int i=0;i<6500;++i);
 	  if (HAL_GPIO_ReadPin(PushButton_GPIO_Port, PushButton_Pin)) {
 		  if(stop==false){
 
