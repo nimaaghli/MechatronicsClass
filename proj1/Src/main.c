@@ -96,9 +96,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		if(mmmm==10){
 			mmmm=0;
 			NVIC_DisableIRQ(TIM7_IRQn);
-
-
-
 		}
 		time++;
 
@@ -284,7 +281,7 @@ static void MX_TIM7_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 8000;
+  htim7.Init.Prescaler = 7780;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 40;
   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
