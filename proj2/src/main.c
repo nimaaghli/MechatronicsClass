@@ -152,7 +152,7 @@ int main(void) {
 				menu2();
 				servo_menu_flag=true;
 			}
-			else if((y>500 && x>300)&&(y<830 && x<680)){
+			else if((y>600 && x>300)&&(y<830 && x<680)){
 					TM_GPIO_TogglePinValue(LED2_PORT,LED2_PIN);
 					TM_HD44780_Clear();
 					menu2();
@@ -177,7 +177,7 @@ int main(void) {
 						if(degree<180){degree+=20;}
 						setdegree(degree);
 			}
-			else if((y>500 && x>500)&&(y<630 && x<650)){
+			else if((y>480 && x>480)&&(y<630 && x<650)){
 						TM_HD44780_Clear();
 						menu1();
 					    step_menu_flag=false;

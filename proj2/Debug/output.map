@@ -6030,30 +6030,30 @@ OUTPUT(proj2.elf elf32-littlearm)
  .debug_macro   0x00001bf9       0xa9 src/tm_stm32f4_gpio.o
  .debug_macro   0x00001ca2      0x378 src/tm_stm32f4_hd44780.o
 
-.debug_line     0x00000000     0x3a91
+.debug_line     0x00000000     0x3ab1
  .debug_line    0x00000000      0x964 StdPeriph_Driver/src/stm32f4xx_adc.o
- .debug_line    0x00000964      0x899 src/main.o
- .debug_line    0x000011fd      0x668 src/system_stm32f4xx.o
- .debug_line    0x00001865      0x862 src/tm_stm32f4_adc.o
- .debug_line    0x000020c7      0x85b src/tm_stm32f4_delay.o
- .debug_line    0x00002922      0x7e7 src/tm_stm32f4_gpio.o
- .debug_line    0x00003109      0x90d src/tm_stm32f4_hd44780.o
- .debug_line    0x00003a16       0x7b startup/startup_stm32f4xx.o
+ .debug_line    0x00000964      0x8b9 src/main.o
+ .debug_line    0x0000121d      0x668 src/system_stm32f4xx.o
+ .debug_line    0x00001885      0x862 src/tm_stm32f4_adc.o
+ .debug_line    0x000020e7      0x85b src/tm_stm32f4_delay.o
+ .debug_line    0x00002942      0x7e7 src/tm_stm32f4_gpio.o
+ .debug_line    0x00003129      0x90d src/tm_stm32f4_hd44780.o
+ .debug_line    0x00003a36       0x7b startup/startup_stm32f4xx.o
 
-.debug_str      0x00000000    0x5af01
+.debug_str      0x00000000    0x5af2a
  .debug_str     0x00000000    0x565a4 StdPeriph_Driver/src/stm32f4xx_adc.o
                               0x56773 (size before relaxing)
- .debug_str     0x000565a4     0x3462 src/main.o
-                              0x59368 (size before relaxing)
- .debug_str     0x00059a06      0x24b src/system_stm32f4xx.o
+ .debug_str     0x000565a4     0x348b src/main.o
+                              0x59370 (size before relaxing)
+ .debug_str     0x00059a2f      0x24b src/system_stm32f4xx.o
                               0x5607a (size before relaxing)
- .debug_str     0x00059c51      0x3a5 src/tm_stm32f4_adc.o
+ .debug_str     0x00059c7a      0x3a5 src/tm_stm32f4_adc.o
                               0x56ac3 (size before relaxing)
- .debug_str     0x00059ff6      0x73b src/tm_stm32f4_delay.o
+ .debug_str     0x0005a01f      0x73b src/tm_stm32f4_delay.o
                               0x591f7 (size before relaxing)
- .debug_str     0x0005a731      0x1f3 src/tm_stm32f4_gpio.o
+ .debug_str     0x0005a75a      0x1f3 src/tm_stm32f4_gpio.o
                               0x566d4 (size before relaxing)
- .debug_str     0x0005a924      0x5dd src/tm_stm32f4_hd44780.o
+ .debug_str     0x0005a94d      0x5dd src/tm_stm32f4_hd44780.o
                               0x596b9 (size before relaxing)
 
 .comment        0x00000000       0x6e

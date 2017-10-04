@@ -50,7 +50,7 @@ all: proj2.elf
 proj2.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU G++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -L"/home/nima/workspace/proj2/inc" -specs=nosys.specs -specs=nano.specs -specs=rdimon.specs -lc -lrdimon -T"/home/nima/workspace/proj2/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -fno-exceptions -fno-rtti -o "proj2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -L"/home/nima/MechatronicsClass/proj2/inc" -specs=nosys.specs -specs=nano.specs -specs=rdimon.specs -lc -lrdimon -T"/home/nima/MechatronicsClass/proj2/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -fno-exceptions -fno-rtti -o "proj2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
