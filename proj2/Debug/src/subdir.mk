@@ -10,6 +10,7 @@ C_SRCS += \
 ../src/tm_stm32f4_delay.c \
 ../src/tm_stm32f4_gpio.c \
 ../src/tm_stm32f4_hd44780.c \
+../src/tm_stm32f4_pwm.c \
 ../src/tm_stm32f4_timer_properties.c 
 
 OBJS += \
@@ -19,6 +20,7 @@ OBJS += \
 ./src/tm_stm32f4_delay.o \
 ./src/tm_stm32f4_gpio.o \
 ./src/tm_stm32f4_hd44780.o \
+./src/tm_stm32f4_pwm.o \
 ./src/tm_stm32f4_timer_properties.o 
 
 C_DEPS += \
@@ -28,6 +30,7 @@ C_DEPS += \
 ./src/tm_stm32f4_delay.d \
 ./src/tm_stm32f4_gpio.d \
 ./src/tm_stm32f4_hd44780.d \
+./src/tm_stm32f4_pwm.d \
 ./src/tm_stm32f4_timer_properties.d 
 
 

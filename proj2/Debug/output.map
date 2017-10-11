@@ -43,13 +43,15 @@ Archive member included to satisfy reference by file (symbol)
 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-reent.o)
                               /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-sbrkr.o) (errno)
 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
-                              src/tm_stm32f4_timer_properties.o (__aeabi_ui2d)
+                              src/tm_stm32f4_pwm.o (__aeabi_ui2d)
 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
-                              src/tm_stm32f4_timer_properties.o (__aeabi_ddiv)
+                              src/main.o (__aeabi_dmul)
 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
-                              src/tm_stm32f4_timer_properties.o (__aeabi_dcmpeq)
+                              src/tm_stm32f4_pwm.o (__aeabi_dcmpeq)
+/home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
+                              src/main.o (__aeabi_d2iz)
 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixunsdfsi.o)
-                              src/tm_stm32f4_timer_properties.o (__aeabi_d2uiz)
+                              src/tm_stm32f4_pwm.o (__aeabi_d2uiz)
 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libnosys.a(_exit.o)
                               /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-exit.o) (_exit)
 
@@ -1999,8 +2001,6 @@ Discarded input sections
  .bss           0x00000000        0x0 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .text.GPIO_DeInit
                 0x00000000      0x120 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .text.GPIO_Init
-                0x00000000      0x11c StdPeriph_Driver/src/stm32f4xx_gpio.o
  .text.GPIO_StructInit
                 0x00000000       0x34 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .text.GPIO_PinLockConfig
@@ -2023,14 +2023,6 @@ Discarded input sections
                 0x00000000       0x20 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .text.GPIO_ToggleBits
                 0x00000000       0x24 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .text.GPIO_PinAFConfig
-                0x00000000       0x94 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_info    0x00000000      0x622 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_abbrev  0x00000000      0x1ac StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_aranges
-                0x00000000       0x88 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_ranges  0x00000000       0x78 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_macro   0x00000000      0x1c3 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_macro   0x00000000      0x8b0 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_macro   0x00000000       0x63 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_macro   0x00000000       0x35 StdPeriph_Driver/src/stm32f4xx_gpio.o
@@ -2070,13 +2062,6 @@ Discarded input sections
  .debug_macro   0x00000000       0x34 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_macro   0x00000000       0x7f StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_macro   0x00000000       0x35 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_macro   0x00000000      0x25f StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_line    0x00000000      0x766 StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_str     0x00000000    0x5612f StdPeriph_Driver/src/stm32f4xx_gpio.o
- .comment       0x00000000       0x6f StdPeriph_Driver/src/stm32f4xx_gpio.o
- .debug_frame   0x00000000      0x23c StdPeriph_Driver/src/stm32f4xx_gpio.o
- .ARM.attributes
-                0x00000000       0x39 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_hash.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_hash.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_hash.o
@@ -2881,13 +2866,9 @@ Discarded input sections
                 0x00000000       0x20 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .text.RCC_I2SCLKConfig
                 0x00000000       0x20 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .text.RCC_AHB1PeriphClockCmd
-                0x00000000       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .text.RCC_AHB2PeriphClockCmd
                 0x00000000       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .text.RCC_AHB3PeriphClockCmd
-                0x00000000       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .text.RCC_APB1PeriphClockCmd
                 0x00000000       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .text.RCC_APB2PeriphClockCmd
                 0x00000000       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
@@ -2921,12 +2902,6 @@ Discarded input sections
                 0x00000000       0x38 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .text.RCC_ClearITPendingBit
                 0x00000000       0x20 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_info    0x00000000      0xc6b StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_abbrev  0x00000000      0x1ea StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_aranges
-                0x00000000      0x178 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_ranges  0x00000000      0x168 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_macro   0x00000000      0x267 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .debug_macro   0x00000000      0x8b0 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .debug_macro   0x00000000       0x63 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .debug_macro   0x00000000       0x35 StdPeriph_Driver/src/stm32f4xx_rcc.o
@@ -2966,13 +2941,6 @@ Discarded input sections
  .debug_macro   0x00000000       0x34 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .debug_macro   0x00000000       0x7f StdPeriph_Driver/src/stm32f4xx_rcc.o
  .debug_macro   0x00000000       0x35 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_macro   0x00000000      0x532 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_line    0x00000000      0x9ac StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_str     0x00000000    0x569b0 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .comment       0x00000000       0x6f StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_frame   0x00000000      0x6d4 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .ARM.attributes
-                0x00000000       0x39 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_rng.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_rng.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_rng.o
@@ -3742,8 +3710,6 @@ Discarded input sections
  .bss           0x00000000        0x0 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_DeInit
                 0x00000000      0x1c0 StdPeriph_Driver/src/stm32f4xx_tim.o
- .text.TIM_TimeBaseInit
-                0x00000000       0xd8 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_TimeBaseStructInit
                 0x00000000       0x34 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_PrescalerConfig
@@ -3768,9 +3734,6 @@ Discarded input sections
                 0x00000000       0x38 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_SetClockDivision
                 0x00000000       0x38 StdPeriph_Driver/src/stm32f4xx_tim.o
- .text.TIM_Cmd  0x00000000       0x40 StdPeriph_Driver/src/stm32f4xx_tim.o
- .text.TIM_OC1Init
-                0x00000000       0xf4 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_OC2Init
                 0x00000000      0x110 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_OC3Init
@@ -3797,8 +3760,6 @@ Discarded input sections
                 0x00000000       0x38 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_ForcedOC4Config
                 0x00000000       0x3c StdPeriph_Driver/src/stm32f4xx_tim.o
- .text.TIM_OC1PreloadConfig
-                0x00000000       0x38 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_OC2PreloadConfig
                 0x00000000       0x3c StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TIM_OC3PreloadConfig
@@ -3923,12 +3884,6 @@ Discarded input sections
                 0x00000000       0x90 StdPeriph_Driver/src/stm32f4xx_tim.o
  .text.TI4_Config
                 0x00000000       0xa0 StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_info    0x00000000     0x1c71 StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_abbrev  0x00000000      0x18e StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_aranges
-                0x00000000      0x2f8 StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_ranges  0x00000000      0x2e8 StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_macro   0x00000000      0x1ed StdPeriph_Driver/src/stm32f4xx_tim.o
  .debug_macro   0x00000000      0x8b0 StdPeriph_Driver/src/stm32f4xx_tim.o
  .debug_macro   0x00000000       0x63 StdPeriph_Driver/src/stm32f4xx_tim.o
  .debug_macro   0x00000000       0x35 StdPeriph_Driver/src/stm32f4xx_tim.o
@@ -3968,13 +3923,6 @@ Discarded input sections
  .debug_macro   0x00000000       0x34 StdPeriph_Driver/src/stm32f4xx_tim.o
  .debug_macro   0x00000000       0x7f StdPeriph_Driver/src/stm32f4xx_tim.o
  .debug_macro   0x00000000       0x35 StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_macro   0x00000000      0x735 StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_line    0x00000000      0xec8 StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_str     0x00000000    0x56b23 StdPeriph_Driver/src/stm32f4xx_tim.o
- .comment       0x00000000       0x6f StdPeriph_Driver/src/stm32f4xx_tim.o
- .debug_frame   0x00000000      0xe54 StdPeriph_Driver/src/stm32f4xx_tim.o
- .ARM.attributes
-                0x00000000       0x39 StdPeriph_Driver/src/stm32f4xx_tim.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_usart.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_usart.o
  .group         0x00000000        0x8 StdPeriph_Driver/src/stm32f4xx_usart.o
@@ -5121,6 +5069,137 @@ Discarded input sections
  .debug_macro   0x00000000       0x35 src/tm_stm32f4_hd44780.o
  .debug_macro   0x00000000       0xaf src/tm_stm32f4_hd44780.o
  .debug_macro   0x00000000       0x58 src/tm_stm32f4_hd44780.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .group         0x00000000        0x8 src/tm_stm32f4_pwm.o
+ .text          0x00000000        0x0 src/tm_stm32f4_pwm.o
+ .data          0x00000000        0x0 src/tm_stm32f4_pwm.o
+ .bss           0x00000000        0x0 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_InitTimer
+                0x00000000      0x148 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_InitChannel
+                0x00000000      0x180 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_SetChannel
+                0x00000000      0x1ac src/tm_stm32f4_pwm.o
+ .text.TM_PWM_SetChannelPercent
+                0x00000000       0x94 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_SetChannelMicros
+                0x00000000       0x44 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM1Pins
+                0x00000000      0x17c src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM2Pins
+                0x00000000      0x190 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM3Pins
+                0x00000000      0x1b0 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM4Pins
+                0x00000000      0x178 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM5Pins
+                0x00000000      0x178 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM8Pins
+                0x00000000      0x174 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM9Pins
+                0x00000000       0xc8 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM10Pins
+                0x00000000       0x7c src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM11Pins
+                0x00000000       0x7c src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM12Pins
+                0x00000000       0xd0 src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM13Pins
+                0x00000000       0x7c src/tm_stm32f4_pwm.o
+ .text.TM_PWM_INT_InitTIM14Pins
+                0x00000000       0x7c src/tm_stm32f4_pwm.o
+ .debug_info    0x00000000      0xb38 src/tm_stm32f4_pwm.o
+ .debug_abbrev  0x00000000      0x17a src/tm_stm32f4_pwm.o
+ .debug_aranges
+                0x00000000       0xa0 src/tm_stm32f4_pwm.o
+ .debug_ranges  0x00000000       0x90 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x1e8 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x8b0 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x63 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x35 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x22 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x87 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x44 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0xfd src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x5e src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x1df src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x18 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x42 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x8cb src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000     0x8057 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x16 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x44e src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x3cf src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x111 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x182 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0xb2 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x146 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x477 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0xac src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x241 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x279 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0xb5 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x265 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x2b1 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x64 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0xa6 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x538 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x40 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x57a src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x341 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x36a src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0xdf src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x73b src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000      0x220 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x34 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x7f src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0x35 src/tm_stm32f4_pwm.o
+ .debug_macro   0x00000000       0xaf src/tm_stm32f4_pwm.o
+ .debug_line    0x00000000      0x97d src/tm_stm32f4_pwm.o
+ .debug_str     0x00000000    0x569ab src/tm_stm32f4_pwm.o
+ .comment       0x00000000       0x6f src/tm_stm32f4_pwm.o
+ .debug_frame   0x00000000      0x298 src/tm_stm32f4_pwm.o
+ .ARM.attributes
+                0x00000000       0x39 src/tm_stm32f4_pwm.o
  .group         0x00000000        0x8 src/tm_stm32f4_timer_properties.o
  .group         0x00000000        0x8 src/tm_stm32f4_timer_properties.o
  .group         0x00000000        0x8 src/tm_stm32f4_timer_properties.o
@@ -5425,21 +5504,17 @@ Discarded input sections
  .ARM.attributes
                 0x00000000       0x34 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-reent.o)
  COMMON         0x00000000        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-reent.o)
- .text          0x00000000      0x370 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
  .data          0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
  .bss           0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
- .ARM.attributes
-                0x00000000       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
- .text          0x00000000      0x424 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
  .data          0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
  .bss           0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
- .ARM.attributes
-                0x00000000       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
  .text          0x00000000      0x110 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
  .data          0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
  .bss           0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
  .ARM.attributes
                 0x00000000       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
+ .data          0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
+ .bss           0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
  .text          0x00000000       0x40 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixunsdfsi.o)
  .data          0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixunsdfsi.o)
  .bss           0x00000000        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixunsdfsi.o)
@@ -5516,6 +5591,7 @@ LOAD src/tm_stm32f4_adc.o
 LOAD src/tm_stm32f4_delay.o
 LOAD src/tm_stm32f4_gpio.o
 LOAD src/tm_stm32f4_hd44780.o
+LOAD src/tm_stm32f4_pwm.o
 LOAD src/tm_stm32f4_timer_properties.o
 LOAD startup/startup_stm32f4xx.o
 LOAD /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libstdc++_nano.a
@@ -5554,309 +5630,377 @@ LOAD /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.li
                 0x08000000                g_pfnVectors
                 0x08000188                . = ALIGN (0x4)
 
-.text           0x08000188     0x1934
+.text           0x08000188     0x3504
                 0x08000188                . = ALIGN (0x4)
  *(.text)
  .text          0x08000188       0x5c /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .text          0x080001e4      0x370 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
+                0x080001e4                __aeabi_drsub
+                0x080001ec                __aeabi_dsub
+                0x080001ec                __subdf3
+                0x080001f0                __adddf3
+                0x080001f0                __aeabi_dadd
+                0x08000468                __aeabi_ui2d
+                0x08000468                __floatunsidf
+                0x08000488                __floatsidf
+                0x08000488                __aeabi_i2d
+                0x080004ac                __extendsfdf2
+                0x080004ac                __aeabi_f2d
+                0x080004e8                __aeabi_ul2d
+                0x080004e8                __floatundidf
+                0x080004f8                __floatdidf
+                0x080004f8                __aeabi_l2d
+ .text          0x08000554      0x424 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
+                0x08000554                __aeabi_dmul
+                0x08000554                __muldf3
+                0x080007a8                __aeabi_ddiv
+                0x080007a8                __divdf3
+ .text          0x08000978       0x50 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
+                0x08000978                __fixdfsi
+                0x08000978                __aeabi_d2iz
  *(.text*)
  .text.ADC_Init
-                0x080001e4       0xac StdPeriph_Driver/src/stm32f4xx_adc.o
-                0x080001e4                ADC_Init
+                0x080009c8       0xac StdPeriph_Driver/src/stm32f4xx_adc.o
+                0x080009c8                ADC_Init
  .text.ADC_CommonInit
-                0x08000290       0x50 StdPeriph_Driver/src/stm32f4xx_adc.o
-                0x08000290                ADC_CommonInit
+                0x08000a74       0x50 StdPeriph_Driver/src/stm32f4xx_adc.o
+                0x08000a74                ADC_CommonInit
  .text.ADC_RegularChannelConfig
-                0x080002e0      0x194 StdPeriph_Driver/src/stm32f4xx_adc.o
-                0x080002e0                ADC_RegularChannelConfig
- .text.Delayms  0x08000474       0x58 src/main.o
- .text.main     0x080004cc      0x31c src/main.o
-                0x080004cc                main
- .text.menu1    0x080007e8       0x24 src/main.o
-                0x080007e8                menu1
- .text.menu2    0x0800080c       0x2c src/main.o
-                0x0800080c                menu2
+                0x08000ac4      0x194 StdPeriph_Driver/src/stm32f4xx_adc.o
+                0x08000ac4                ADC_RegularChannelConfig
+ .text.GPIO_Init
+                0x08000c58      0x11c StdPeriph_Driver/src/stm32f4xx_gpio.o
+                0x08000c58                GPIO_Init
+ .text.GPIO_PinAFConfig
+                0x08000d74       0x94 StdPeriph_Driver/src/stm32f4xx_gpio.o
+                0x08000d74                GPIO_PinAFConfig
+ .text.RCC_AHB1PeriphClockCmd
+                0x08000e08       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
+                0x08000e08                RCC_AHB1PeriphClockCmd
+ .text.RCC_APB1PeriphClockCmd
+                0x08000e48       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
+                0x08000e48                RCC_APB1PeriphClockCmd
+ .text.TIM_TimeBaseInit
+                0x08000e88       0xd8 StdPeriph_Driver/src/stm32f4xx_tim.o
+                0x08000e88                TIM_TimeBaseInit
+ .text.TIM_Cmd  0x08000f60       0x40 StdPeriph_Driver/src/stm32f4xx_tim.o
+                0x08000f60                TIM_Cmd
+ .text.TIM_OC1Init
+                0x08000fa0       0xf4 StdPeriph_Driver/src/stm32f4xx_tim.o
+                0x08000fa0                TIM_OC1Init
+ .text.TIM_OC1PreloadConfig
+                0x08001094       0x38 StdPeriph_Driver/src/stm32f4xx_tim.o
+                0x08001094                TIM_OC1PreloadConfig
+ .text.Delayms  0x080010cc       0x58 src/main.o
+ *fill*         0x08001124        0x4 
+ .text.main     0x08001128      0x468 src/main.o
+                0x08001128                main
+ .text.menu1    0x08001590       0x24 src/main.o
+                0x08001590                menu1
+ .text.menu2    0x080015b4       0x30 src/main.o
+                0x080015b4                menu2
  .text.setdegree
-                0x08000838      0x1dc src/main.o
-                0x08000838                setdegree
+                0x080015e4      0x818 src/main.o
+                0x080015e4                setdegree
+ .text.drive_step_CCW
+                0x08001dfc      0x160 src/main.o
+                0x08001dfc                drive_step_CCW
+ .text.drive_step_CW
+                0x08001f5c      0x160 src/main.o
+                0x08001f5c                drive_step_CW
+ .text.drive_servo
+                0x080020bc      0x38c src/main.o
+                0x080020bc                drive_servo
+ .text.InitializeTimer
+                0x08002448       0x4c src/main.o
+                0x08002448                InitializeTimer
+ .text.InitializePWMChannel
+                0x08002494       0x50 src/main.o
+                0x08002494                InitializePWMChannel
+ .text.InitializeLEDs
+                0x080024e4       0x30 src/main.o
+                0x080024e4                InitializeLEDs
+ .text.setpwm   0x08002514       0x58 src/main.o
+                0x08002514                setpwm
  .text.SystemInit
-                0x08000a14       0x5c src/system_stm32f4xx.o
-                0x08000a14                SystemInit
+                0x0800256c       0x5c src/system_stm32f4xx.o
+                0x0800256c                SystemInit
  .text.SetSysClock
-                0x08000a70      0x128 src/system_stm32f4xx.o
+                0x080025c8      0x128 src/system_stm32f4xx.o
  .text.TM_ADC_Init
-                0x08000b98       0xfc src/tm_stm32f4_adc.o
-                0x08000b98                TM_ADC_Init
+                0x080026f0       0xfc src/tm_stm32f4_adc.o
+                0x080026f0                TM_ADC_Init
  .text.TM_ADC_InitADC
-                0x08000c94       0xbc src/tm_stm32f4_adc.o
-                0x08000c94                TM_ADC_InitADC
+                0x080027ec       0xbc src/tm_stm32f4_adc.o
+                0x080027ec                TM_ADC_InitADC
  .text.TM_ADC_Read
-                0x08000d50       0x54 src/tm_stm32f4_adc.o
-                0x08000d50                TM_ADC_Read
+                0x080028a8       0x54 src/tm_stm32f4_adc.o
+                0x080028a8                TM_ADC_Read
  .text.TM_ADC_INT_Channel_0_Init
-                0x08000da4       0x1c src/tm_stm32f4_adc.o
-                0x08000da4                TM_ADC_INT_Channel_0_Init
+                0x080028fc       0x1c src/tm_stm32f4_adc.o
+                0x080028fc                TM_ADC_INT_Channel_0_Init
  .text.TM_ADC_INT_Channel_1_Init
-                0x08000dc0       0x1c src/tm_stm32f4_adc.o
-                0x08000dc0                TM_ADC_INT_Channel_1_Init
+                0x08002918       0x1c src/tm_stm32f4_adc.o
+                0x08002918                TM_ADC_INT_Channel_1_Init
  .text.TM_ADC_INT_Channel_2_Init
-                0x08000ddc       0x1c src/tm_stm32f4_adc.o
-                0x08000ddc                TM_ADC_INT_Channel_2_Init
+                0x08002934       0x1c src/tm_stm32f4_adc.o
+                0x08002934                TM_ADC_INT_Channel_2_Init
  .text.TM_ADC_INT_Channel_3_Init
-                0x08000df8       0x1c src/tm_stm32f4_adc.o
-                0x08000df8                TM_ADC_INT_Channel_3_Init
+                0x08002950       0x1c src/tm_stm32f4_adc.o
+                0x08002950                TM_ADC_INT_Channel_3_Init
  .text.TM_ADC_INT_Channel_4_Init
-                0x08000e14       0x4c src/tm_stm32f4_adc.o
-                0x08000e14                TM_ADC_INT_Channel_4_Init
+                0x0800296c       0x4c src/tm_stm32f4_adc.o
+                0x0800296c                TM_ADC_INT_Channel_4_Init
  .text.TM_ADC_INT_Channel_5_Init
-                0x08000e60       0x4c src/tm_stm32f4_adc.o
-                0x08000e60                TM_ADC_INT_Channel_5_Init
+                0x080029b8       0x4c src/tm_stm32f4_adc.o
+                0x080029b8                TM_ADC_INT_Channel_5_Init
  .text.TM_ADC_INT_Channel_6_Init
-                0x08000eac       0x50 src/tm_stm32f4_adc.o
-                0x08000eac                TM_ADC_INT_Channel_6_Init
+                0x08002a04       0x50 src/tm_stm32f4_adc.o
+                0x08002a04                TM_ADC_INT_Channel_6_Init
  .text.TM_ADC_INT_Channel_7_Init
-                0x08000efc       0x50 src/tm_stm32f4_adc.o
-                0x08000efc                TM_ADC_INT_Channel_7_Init
+                0x08002a54       0x50 src/tm_stm32f4_adc.o
+                0x08002a54                TM_ADC_INT_Channel_7_Init
  .text.TM_ADC_INT_Channel_8_Init
-                0x08000f4c       0x50 src/tm_stm32f4_adc.o
-                0x08000f4c                TM_ADC_INT_Channel_8_Init
+                0x08002aa4       0x50 src/tm_stm32f4_adc.o
+                0x08002aa4                TM_ADC_INT_Channel_8_Init
  .text.TM_ADC_INT_Channel_9_Init
-                0x08000f9c       0x4c src/tm_stm32f4_adc.o
-                0x08000f9c                TM_ADC_INT_Channel_9_Init
+                0x08002af4       0x4c src/tm_stm32f4_adc.o
+                0x08002af4                TM_ADC_INT_Channel_9_Init
  .text.TM_ADC_INT_Channel_10_Init
-                0x08000fe8       0x1c src/tm_stm32f4_adc.o
-                0x08000fe8                TM_ADC_INT_Channel_10_Init
+                0x08002b40       0x1c src/tm_stm32f4_adc.o
+                0x08002b40                TM_ADC_INT_Channel_10_Init
  .text.TM_ADC_INT_Channel_11_Init
-                0x08001004       0x1c src/tm_stm32f4_adc.o
-                0x08001004                TM_ADC_INT_Channel_11_Init
+                0x08002b5c       0x1c src/tm_stm32f4_adc.o
+                0x08002b5c                TM_ADC_INT_Channel_11_Init
  .text.TM_ADC_INT_Channel_12_Init
-                0x08001020       0x1c src/tm_stm32f4_adc.o
-                0x08001020                TM_ADC_INT_Channel_12_Init
+                0x08002b78       0x1c src/tm_stm32f4_adc.o
+                0x08002b78                TM_ADC_INT_Channel_12_Init
  .text.TM_ADC_INT_Channel_13_Init
-                0x0800103c       0x1c src/tm_stm32f4_adc.o
-                0x0800103c                TM_ADC_INT_Channel_13_Init
+                0x08002b94       0x1c src/tm_stm32f4_adc.o
+                0x08002b94                TM_ADC_INT_Channel_13_Init
  .text.TM_ADC_INT_Channel_14_Init
-                0x08001058       0x4c src/tm_stm32f4_adc.o
-                0x08001058                TM_ADC_INT_Channel_14_Init
+                0x08002bb0       0x4c src/tm_stm32f4_adc.o
+                0x08002bb0                TM_ADC_INT_Channel_14_Init
  .text.TM_ADC_INT_Channel_15_Init
-                0x080010a4       0x50 src/tm_stm32f4_adc.o
-                0x080010a4                TM_ADC_INT_Channel_15_Init
+                0x08002bfc       0x50 src/tm_stm32f4_adc.o
+                0x08002bfc                TM_ADC_INT_Channel_15_Init
  .text.TM_ADC_INT_InitPin
-                0x080010f4       0x28 src/tm_stm32f4_adc.o
-                0x080010f4                TM_ADC_INT_InitPin
+                0x08002c4c       0x28 src/tm_stm32f4_adc.o
+                0x08002c4c                TM_ADC_INT_InitPin
  .text.NVIC_SetPriority
-                0x0800111c       0x54 src/tm_stm32f4_delay.o
+                0x08002c74       0x54 src/tm_stm32f4_delay.o
  .text.SysTick_Config
-                0x08001170       0x44 src/tm_stm32f4_delay.o
+                0x08002cc8       0x44 src/tm_stm32f4_delay.o
  .text.SysTick_Handler
-                0x080011b4       0xf0 src/tm_stm32f4_delay.o
-                0x080011b4                SysTick_Handler
+                0x08002d0c       0xf0 src/tm_stm32f4_delay.o
+                0x08002d0c                SysTick_Handler
  .text.TM_DELAY_Init
-                0x080012a4       0x50 src/tm_stm32f4_delay.o
-                0x080012a4                TM_DELAY_Init
+                0x08002dfc       0x50 src/tm_stm32f4_delay.o
+                0x08002dfc                TM_DELAY_Init
  .text.TM_GPIO_Init
-                0x080012f4       0x48 src/tm_stm32f4_gpio.o
-                0x080012f4                TM_GPIO_Init
+                0x08002e4c       0x48 src/tm_stm32f4_gpio.o
+                0x08002e4c                TM_GPIO_Init
  .text.TM_GPIO_GetPortSource
-                0x0800133c       0x24 src/tm_stm32f4_gpio.o
-                0x0800133c                TM_GPIO_GetPortSource
+                0x08002e94       0x24 src/tm_stm32f4_gpio.o
+                0x08002e94                TM_GPIO_GetPortSource
  .text.TM_GPIO_INT_EnableClock
-                0x08001360       0x30 src/tm_stm32f4_gpio.o
-                0x08001360                TM_GPIO_INT_EnableClock
+                0x08002eb8       0x30 src/tm_stm32f4_gpio.o
+                0x08002eb8                TM_GPIO_INT_EnableClock
  .text.TM_GPIO_INT_Init
-                0x08001390      0x10c src/tm_stm32f4_gpio.o
-                0x08001390                TM_GPIO_INT_Init
- .text.Delay    0x0800149c       0x5c src/tm_stm32f4_hd44780.o
+                0x08002ee8      0x10c src/tm_stm32f4_gpio.o
+                0x08002ee8                TM_GPIO_INT_Init
+ .text.Delay    0x08002ff4       0x5c src/tm_stm32f4_hd44780.o
  .text.TM_HD44780_Init
-                0x080014f8       0xd0 src/tm_stm32f4_hd44780.o
-                0x080014f8                TM_HD44780_Init
+                0x08003050       0xd0 src/tm_stm32f4_hd44780.o
+                0x08003050                TM_HD44780_Init
  .text.TM_HD44780_Clear
-                0x080015c8       0x18 src/tm_stm32f4_hd44780.o
-                0x080015c8                TM_HD44780_Clear
+                0x08003120       0x18 src/tm_stm32f4_hd44780.o
+                0x08003120                TM_HD44780_Clear
  .text.TM_HD44780_Puts
-                0x080015e0       0xb8 src/tm_stm32f4_hd44780.o
-                0x080015e0                TM_HD44780_Puts
+                0x08003138       0xb8 src/tm_stm32f4_hd44780.o
+                0x08003138                TM_HD44780_Puts
  .text.TM_HD44780_DisplayOn
-                0x08001698       0x2c src/tm_stm32f4_hd44780.o
-                0x08001698                TM_HD44780_DisplayOn
+                0x080031f0       0x2c src/tm_stm32f4_hd44780.o
+                0x080031f0                TM_HD44780_DisplayOn
  .text.TM_HD44780_CreateChar
-                0x080016c4       0x50 src/tm_stm32f4_hd44780.o
-                0x080016c4                TM_HD44780_CreateChar
+                0x0800321c       0x50 src/tm_stm32f4_hd44780.o
+                0x0800321c                TM_HD44780_CreateChar
  .text.TM_HD44780_PutCustom
-                0x08001714       0x30 src/tm_stm32f4_hd44780.o
-                0x08001714                TM_HD44780_PutCustom
+                0x0800326c       0x30 src/tm_stm32f4_hd44780.o
+                0x0800326c                TM_HD44780_PutCustom
  .text.TM_HD44780_Cmd
-                0x08001744       0x38 src/tm_stm32f4_hd44780.o
+                0x0800329c       0x38 src/tm_stm32f4_hd44780.o
  .text.TM_HD44780_Data
-                0x0800177c       0x38 src/tm_stm32f4_hd44780.o
+                0x080032d4       0x38 src/tm_stm32f4_hd44780.o
  .text.TM_HD44780_Cmd4bit
-                0x080017b4       0xa4 src/tm_stm32f4_hd44780.o
+                0x0800330c       0xa4 src/tm_stm32f4_hd44780.o
  .text.TM_HD44780_CursorSet
-                0x08001858       0x68 src/tm_stm32f4_hd44780.o
+                0x080033b0       0x68 src/tm_stm32f4_hd44780.o
  .text.TM_HD44780_InitPins
-                0x080018c0       0xc0 src/tm_stm32f4_hd44780.o
+                0x08003418       0xc0 src/tm_stm32f4_hd44780.o
  .text.Reset_Handler
-                0x08001980       0x48 startup/startup_stm32f4xx.o
-                0x08001980                Reset_Handler
+                0x080034d8       0x48 startup/startup_stm32f4xx.o
+                0x080034d8                Reset_Handler
  .text.Default_Handler
-                0x080019c8        0x2 startup/startup_stm32f4xx.o
-                0x080019c8                RTC_Alarm_IRQHandler
-                0x080019c8                HASH_RNG_IRQHandler
-                0x080019c8                EXTI2_IRQHandler
-                0x080019c8                TIM8_CC_IRQHandler
-                0x080019c8                DebugMon_Handler
-                0x080019c8                TIM1_CC_IRQHandler
-                0x080019c8                DMA2_Stream5_IRQHandler
-                0x080019c8                HardFault_Handler
-                0x080019c8                DMA1_Stream5_IRQHandler
-                0x080019c8                PVD_IRQHandler
-                0x080019c8                SDIO_IRQHandler
-                0x080019c8                TAMP_STAMP_IRQHandler
-                0x080019c8                PendSV_Handler
-                0x080019c8                NMI_Handler
-                0x080019c8                CAN2_RX1_IRQHandler
-                0x080019c8                EXTI3_IRQHandler
-                0x080019c8                TIM8_TRG_COM_TIM14_IRQHandler
-                0x080019c8                TIM1_UP_TIM10_IRQHandler
-                0x080019c8                TIM8_UP_TIM13_IRQHandler
-                0x080019c8                I2C3_ER_IRQHandler
-                0x080019c8                EXTI0_IRQHandler
-                0x080019c8                I2C2_EV_IRQHandler
-                0x080019c8                DMA1_Stream2_IRQHandler
-                0x080019c8                CAN1_RX0_IRQHandler
-                0x080019c8                FPU_IRQHandler
-                0x080019c8                OTG_HS_WKUP_IRQHandler
-                0x080019c8                UsageFault_Handler
-                0x080019c8                CAN2_SCE_IRQHandler
-                0x080019c8                DMA2_Stream2_IRQHandler
-                0x080019c8                SPI1_IRQHandler
-                0x080019c8                TIM6_DAC_IRQHandler
-                0x080019c8                TIM1_BRK_TIM9_IRQHandler
-                0x080019c8                DCMI_IRQHandler
-                0x080019c8                CAN2_RX0_IRQHandler
-                0x080019c8                DMA2_Stream3_IRQHandler
-                0x080019c8                USART6_IRQHandler
-                0x080019c8                USART3_IRQHandler
-                0x080019c8                CRYP_IRQHandler
-                0x080019c8                CAN1_RX1_IRQHandler
-                0x080019c8                UART5_IRQHandler
-                0x080019c8                DMA2_Stream0_IRQHandler
-                0x080019c8                TIM4_IRQHandler
-                0x080019c8                I2C1_EV_IRQHandler
-                0x080019c8                DMA1_Stream6_IRQHandler
-                0x080019c8                DMA1_Stream1_IRQHandler
-                0x080019c8                UART4_IRQHandler
-                0x080019c8                TIM3_IRQHandler
-                0x080019c8                RCC_IRQHandler
-                0x080019c8                TIM8_BRK_TIM12_IRQHandler
-                0x080019c8                Default_Handler
-                0x080019c8                EXTI15_10_IRQHandler
-                0x080019c8                ADC_IRQHandler
-                0x080019c8                DMA1_Stream7_IRQHandler
-                0x080019c8                TIM7_IRQHandler
-                0x080019c8                CAN2_TX_IRQHandler
-                0x080019c8                TIM5_IRQHandler
-                0x080019c8                DMA2_Stream7_IRQHandler
-                0x080019c8                I2C3_EV_IRQHandler
-                0x080019c8                EXTI9_5_IRQHandler
-                0x080019c8                RTC_WKUP_IRQHandler
-                0x080019c8                ETH_WKUP_IRQHandler
-                0x080019c8                SPI2_IRQHandler
-                0x080019c8                OTG_HS_EP1_IN_IRQHandler
-                0x080019c8                MemManage_Handler
-                0x080019c8                DMA1_Stream0_IRQHandler
-                0x080019c8                CAN1_TX_IRQHandler
-                0x080019c8                SVC_Handler
-                0x080019c8                EXTI4_IRQHandler
-                0x080019c8                FSMC_IRQHandler
-                0x080019c8                ETH_IRQHandler
-                0x080019c8                OTG_HS_EP1_OUT_IRQHandler
-                0x080019c8                WWDG_IRQHandler
-                0x080019c8                TIM2_IRQHandler
-                0x080019c8                OTG_FS_WKUP_IRQHandler
-                0x080019c8                TIM1_TRG_COM_TIM11_IRQHandler
-                0x080019c8                OTG_HS_IRQHandler
-                0x080019c8                EXTI1_IRQHandler
-                0x080019c8                USART2_IRQHandler
-                0x080019c8                I2C2_ER_IRQHandler
-                0x080019c8                DMA2_Stream1_IRQHandler
-                0x080019c8                CAN1_SCE_IRQHandler
-                0x080019c8                FLASH_IRQHandler
-                0x080019c8                DMA2_Stream4_IRQHandler
-                0x080019c8                BusFault_Handler
-                0x080019c8                USART1_IRQHandler
-                0x080019c8                OTG_FS_IRQHandler
-                0x080019c8                SPI3_IRQHandler
-                0x080019c8                DMA1_Stream4_IRQHandler
-                0x080019c8                I2C1_ER_IRQHandler
-                0x080019c8                DMA2_Stream6_IRQHandler
-                0x080019c8                DMA1_Stream3_IRQHandler
- *fill*         0x080019ca        0x2 
+                0x08003520        0x2 startup/startup_stm32f4xx.o
+                0x08003520                RTC_Alarm_IRQHandler
+                0x08003520                HASH_RNG_IRQHandler
+                0x08003520                EXTI2_IRQHandler
+                0x08003520                TIM8_CC_IRQHandler
+                0x08003520                DebugMon_Handler
+                0x08003520                TIM1_CC_IRQHandler
+                0x08003520                DMA2_Stream5_IRQHandler
+                0x08003520                HardFault_Handler
+                0x08003520                DMA1_Stream5_IRQHandler
+                0x08003520                PVD_IRQHandler
+                0x08003520                SDIO_IRQHandler
+                0x08003520                TAMP_STAMP_IRQHandler
+                0x08003520                PendSV_Handler
+                0x08003520                NMI_Handler
+                0x08003520                CAN2_RX1_IRQHandler
+                0x08003520                EXTI3_IRQHandler
+                0x08003520                TIM8_TRG_COM_TIM14_IRQHandler
+                0x08003520                TIM1_UP_TIM10_IRQHandler
+                0x08003520                TIM8_UP_TIM13_IRQHandler
+                0x08003520                I2C3_ER_IRQHandler
+                0x08003520                EXTI0_IRQHandler
+                0x08003520                I2C2_EV_IRQHandler
+                0x08003520                DMA1_Stream2_IRQHandler
+                0x08003520                CAN1_RX0_IRQHandler
+                0x08003520                FPU_IRQHandler
+                0x08003520                OTG_HS_WKUP_IRQHandler
+                0x08003520                UsageFault_Handler
+                0x08003520                CAN2_SCE_IRQHandler
+                0x08003520                DMA2_Stream2_IRQHandler
+                0x08003520                SPI1_IRQHandler
+                0x08003520                TIM6_DAC_IRQHandler
+                0x08003520                TIM1_BRK_TIM9_IRQHandler
+                0x08003520                DCMI_IRQHandler
+                0x08003520                CAN2_RX0_IRQHandler
+                0x08003520                DMA2_Stream3_IRQHandler
+                0x08003520                USART6_IRQHandler
+                0x08003520                USART3_IRQHandler
+                0x08003520                CRYP_IRQHandler
+                0x08003520                CAN1_RX1_IRQHandler
+                0x08003520                UART5_IRQHandler
+                0x08003520                DMA2_Stream0_IRQHandler
+                0x08003520                TIM4_IRQHandler
+                0x08003520                I2C1_EV_IRQHandler
+                0x08003520                DMA1_Stream6_IRQHandler
+                0x08003520                DMA1_Stream1_IRQHandler
+                0x08003520                UART4_IRQHandler
+                0x08003520                TIM3_IRQHandler
+                0x08003520                RCC_IRQHandler
+                0x08003520                TIM8_BRK_TIM12_IRQHandler
+                0x08003520                Default_Handler
+                0x08003520                EXTI15_10_IRQHandler
+                0x08003520                ADC_IRQHandler
+                0x08003520                DMA1_Stream7_IRQHandler
+                0x08003520                TIM7_IRQHandler
+                0x08003520                CAN2_TX_IRQHandler
+                0x08003520                TIM5_IRQHandler
+                0x08003520                DMA2_Stream7_IRQHandler
+                0x08003520                I2C3_EV_IRQHandler
+                0x08003520                EXTI9_5_IRQHandler
+                0x08003520                RTC_WKUP_IRQHandler
+                0x08003520                ETH_WKUP_IRQHandler
+                0x08003520                SPI2_IRQHandler
+                0x08003520                OTG_HS_EP1_IN_IRQHandler
+                0x08003520                MemManage_Handler
+                0x08003520                DMA1_Stream0_IRQHandler
+                0x08003520                CAN1_TX_IRQHandler
+                0x08003520                SVC_Handler
+                0x08003520                EXTI4_IRQHandler
+                0x08003520                FSMC_IRQHandler
+                0x08003520                ETH_IRQHandler
+                0x08003520                OTG_HS_EP1_OUT_IRQHandler
+                0x08003520                WWDG_IRQHandler
+                0x08003520                TIM2_IRQHandler
+                0x08003520                OTG_FS_WKUP_IRQHandler
+                0x08003520                TIM1_TRG_COM_TIM11_IRQHandler
+                0x08003520                OTG_HS_IRQHandler
+                0x08003520                EXTI1_IRQHandler
+                0x08003520                USART2_IRQHandler
+                0x08003520                I2C2_ER_IRQHandler
+                0x08003520                DMA2_Stream1_IRQHandler
+                0x08003520                CAN1_SCE_IRQHandler
+                0x08003520                FLASH_IRQHandler
+                0x08003520                DMA2_Stream4_IRQHandler
+                0x08003520                BusFault_Handler
+                0x08003520                USART1_IRQHandler
+                0x08003520                OTG_FS_IRQHandler
+                0x08003520                SPI3_IRQHandler
+                0x08003520                DMA1_Stream4_IRQHandler
+                0x08003520                I2C1_ER_IRQHandler
+                0x08003520                DMA2_Stream6_IRQHandler
+                0x08003520                DMA1_Stream3_IRQHandler
+ *fill*         0x08003522        0x2 
  .text.__libc_init_array
-                0x080019cc       0x4c /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)
-                0x080019cc                __libc_init_array
+                0x08003524       0x4c /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)
+                0x08003524                __libc_init_array
  *(.rodata)
- .rodata        0x08001a18       0x85 src/main.o
- *fill*         0x08001a9d        0x3 
- .rodata        0x08001aa0        0x4 src/tm_stm32f4_hd44780.o
+ .rodata        0x08003570       0xfd src/main.o
+ *fill*         0x0800366d        0x3 
+ .rodata        0x08003670        0x4 src/tm_stm32f4_hd44780.o
  *(.rodata*)
  *(.glue_7)
- .glue_7        0x08001aa4        0x0 linker stubs
+ .glue_7        0x08003674        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08001aa4        0x0 linker stubs
+ .glue_7t       0x08003674        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x08001aa4        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .eh_frame      0x08003674        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
  *(.init)
- .init          0x08001aa4        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x08001aa4                _init
- .init          0x08001aa8        0x8 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+ .init          0x08003674        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x08003674                _init
+ .init          0x08003678        0x8 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
  *(.fini)
- .fini          0x08001ab0        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x08001ab0                _fini
- .fini          0x08001ab4        0x8 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
-                0x08001abc                . = ALIGN (0x4)
-                0x08001abc                _etext = .
+ .fini          0x08003680        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x08003680                _fini
+ .fini          0x08003684        0x8 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+                0x0800368c                . = ALIGN (0x4)
+                0x0800368c                _etext = .
 
-.vfp11_veneer   0x08001abc        0x0
- .vfp11_veneer  0x08001abc        0x0 linker stubs
+.vfp11_veneer   0x0800368c        0x0
+ .vfp11_veneer  0x0800368c        0x0 linker stubs
 
-.v4_bx          0x08001abc        0x0
- .v4_bx         0x08001abc        0x0 linker stubs
+.v4_bx          0x0800368c        0x0
+ .v4_bx         0x0800368c        0x0 linker stubs
 
-.iplt           0x08001abc        0x0
- .iplt          0x08001abc        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.iplt           0x0800368c        0x0
+ .iplt          0x0800368c        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.rel.dyn        0x08001abc        0x0
- .rel.iplt      0x08001abc        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.rel.dyn        0x0800368c        0x0
+ .rel.iplt      0x0800368c        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x08001abc        0x0
-                0x08001abc                __exidx_start = .
+.ARM            0x0800368c        0x0
+                0x0800368c                __exidx_start = .
  *(.ARM.exidx*)
-                0x08001abc                __exidx_end = .
+                0x0800368c                __exidx_end = .
 
-.preinit_array  0x08001abc        0x0
-                0x08001abc                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x0800368c        0x0
+                0x0800368c                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x08001abc                PROVIDE (__preinit_array_end, .)
+                0x0800368c                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x08001abc        0x4
-                0x08001abc                PROVIDE (__init_array_start, .)
+.init_array     0x0800368c        0x4
+                0x0800368c                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
- .init_array    0x08001abc        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-                0x08001ac0                PROVIDE (__init_array_end, .)
+ .init_array    0x0800368c        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+                0x08003690                PROVIDE (__init_array_end, .)
 
-.fini_array     0x08001ac0        0x4
+.fini_array     0x08003690        0x4
                 [!provide]                PROVIDE (__fini_array_start, .)
  *(.fini_array*)
- .fini_array    0x08001ac0        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .fini_array    0x08003690        0x4 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
  *(SORT(.fini_array.*))
                 [!provide]                PROVIDE (__fini_array_end, .)
-                0x08001ac4                _sidata = .
+                0x08003694                _sidata = .
 
-.data           0x20000000       0x24 load address 0x08001ac4
+.data           0x20000000       0x24 load address 0x08003694
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -5870,14 +6014,14 @@ LOAD /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.li
                 0x20000024                . = ALIGN (0x4)
                 0x20000024                _edata = .
 
-.jcr            0x20000024        0x0 load address 0x08001ae8
+.jcr            0x20000024        0x0 load address 0x080036b8
  .jcr           0x20000024        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.igot.plt       0x20000024        0x0 load address 0x08001ae8
+.igot.plt       0x20000024        0x0 load address 0x080036b8
  .igot.plt      0x20000024        0x0 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
                 0x20000024                . = ALIGN (0x4)
 
-.bss            0x20000024       0x68 load address 0x08001ae8
+.bss            0x20000024       0x68 load address 0x080036b8
                 0x20000024                _sbss = .
                 0x20000024                __bss_start__ = _sbss
  *(.bss)
@@ -5900,7 +6044,7 @@ LOAD /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.li
                 0x2000008c                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2000008c      0x404 load address 0x08001b50
+                0x2000008c      0x404 load address 0x08003720
                 0x20000090                . = ALIGN (0x8)
  *fill*         0x2000008c        0x4 
                 0x20000090                PROVIDE (end, .)
@@ -5931,134 +6075,179 @@ LOAD /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.li
  .ARM.attributes
                 0x00000056       0x39 StdPeriph_Driver/src/stm32f4xx_adc.o
  .ARM.attributes
-                0x0000008f       0x39 src/main.o
+                0x0000008f       0x39 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .ARM.attributes
-                0x000000c8       0x39 src/system_stm32f4xx.o
+                0x000000c8       0x39 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .ARM.attributes
-                0x00000101       0x39 src/tm_stm32f4_adc.o
+                0x00000101       0x39 StdPeriph_Driver/src/stm32f4xx_tim.o
  .ARM.attributes
-                0x0000013a       0x39 src/tm_stm32f4_delay.o
+                0x0000013a       0x39 src/main.o
  .ARM.attributes
-                0x00000173       0x39 src/tm_stm32f4_gpio.o
+                0x00000173       0x39 src/system_stm32f4xx.o
  .ARM.attributes
-                0x000001ac       0x39 src/tm_stm32f4_hd44780.o
+                0x000001ac       0x39 src/tm_stm32f4_adc.o
  .ARM.attributes
-                0x000001e5       0x21 startup/startup_stm32f4xx.o
+                0x000001e5       0x39 src/tm_stm32f4_delay.o
  .ARM.attributes
-                0x00000206       0x34 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)
+                0x0000021e       0x39 src/tm_stm32f4_gpio.o
  .ARM.attributes
-                0x0000023a       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+                0x00000257       0x39 src/tm_stm32f4_hd44780.o
+ .ARM.attributes
+                0x00000290       0x21 startup/startup_stm32f4xx.o
+ .ARM.attributes
+                0x000002b1       0x34 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)
+ .ARM.attributes
+                0x000002e5       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
+ .ARM.attributes
+                0x00000307       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
+ .ARM.attributes
+                0x00000329       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
+ .ARM.attributes
+                0x0000034b       0x22 /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
 OUTPUT(proj2.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x39fa
+.debug_info     0x00000000     0x6f38
  .debug_info    0x00000000      0xc48 StdPeriph_Driver/src/stm32f4xx_adc.o
- .debug_info    0x00000c48      0x5a9 src/main.o
- .debug_info    0x000011f1      0x5cd src/system_stm32f4xx.o
- .debug_info    0x000017be      0xa19 src/tm_stm32f4_adc.o
- .debug_info    0x000021d7      0xa2c src/tm_stm32f4_delay.o
- .debug_info    0x00002c03      0x845 src/tm_stm32f4_gpio.o
- .debug_info    0x00003448      0x54e src/tm_stm32f4_hd44780.o
- .debug_info    0x00003996       0x64 startup/startup_stm32f4xx.o
+ .debug_info    0x00000c48      0x622 StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .debug_info    0x0000126a      0xc6b StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .debug_info    0x00001ed5     0x1c71 StdPeriph_Driver/src/stm32f4xx_tim.o
+ .debug_info    0x00003b46      0xbe9 src/main.o
+ .debug_info    0x0000472f      0x5cd src/system_stm32f4xx.o
+ .debug_info    0x00004cfc      0xa19 src/tm_stm32f4_adc.o
+ .debug_info    0x00005715      0xa2c src/tm_stm32f4_delay.o
+ .debug_info    0x00006141      0x845 src/tm_stm32f4_gpio.o
+ .debug_info    0x00006986      0x54e src/tm_stm32f4_hd44780.o
+ .debug_info    0x00006ed4       0x64 startup/startup_stm32f4xx.o
 
-.debug_abbrev   0x00000000      0xc41
+.debug_abbrev   0x00000000     0x11c8
  .debug_abbrev  0x00000000      0x19d StdPeriph_Driver/src/stm32f4xx_adc.o
- .debug_abbrev  0x0000019d      0x201 src/main.o
- .debug_abbrev  0x0000039e      0x13d src/system_stm32f4xx.o
- .debug_abbrev  0x000004db      0x18c src/tm_stm32f4_adc.o
- .debug_abbrev  0x00000667      0x2d4 src/tm_stm32f4_delay.o
- .debug_abbrev  0x0000093b      0x156 src/tm_stm32f4_gpio.o
- .debug_abbrev  0x00000a91      0x19e src/tm_stm32f4_hd44780.o
- .debug_abbrev  0x00000c2f       0x12 startup/startup_stm32f4xx.o
+ .debug_abbrev  0x0000019d      0x1ac StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .debug_abbrev  0x00000349      0x1ea StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .debug_abbrev  0x00000533      0x18e StdPeriph_Driver/src/stm32f4xx_tim.o
+ .debug_abbrev  0x000006c1      0x264 src/main.o
+ .debug_abbrev  0x00000925      0x13d src/system_stm32f4xx.o
+ .debug_abbrev  0x00000a62      0x18c src/tm_stm32f4_adc.o
+ .debug_abbrev  0x00000bee      0x2d4 src/tm_stm32f4_delay.o
+ .debug_abbrev  0x00000ec2      0x156 src/tm_stm32f4_gpio.o
+ .debug_abbrev  0x00001018      0x19e src/tm_stm32f4_hd44780.o
+ .debug_abbrev  0x000011b6       0x12 startup/startup_stm32f4xx.o
 
-.debug_aranges  0x00000000      0x478
+.debug_aranges  0x00000000      0x9a8
  .debug_aranges
                 0x00000000      0x148 StdPeriph_Driver/src/stm32f4xx_adc.o
  .debug_aranges
-                0x00000148       0x40 src/main.o
+                0x00000148       0x88 StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_aranges
-                0x00000188       0x30 src/system_stm32f4xx.o
+                0x000001d0      0x178 StdPeriph_Driver/src/stm32f4xx_rcc.o
  .debug_aranges
-                0x000001b8       0xd0 src/tm_stm32f4_adc.o
+                0x00000348      0x2f8 StdPeriph_Driver/src/stm32f4xx_tim.o
  .debug_aranges
-                0x00000288       0x80 src/tm_stm32f4_delay.o
+                0x00000640       0x78 src/main.o
  .debug_aranges
-                0x00000308       0x98 src/tm_stm32f4_gpio.o
+                0x000006b8       0x30 src/system_stm32f4xx.o
  .debug_aranges
-                0x000003a0       0xb0 src/tm_stm32f4_hd44780.o
+                0x000006e8       0xd0 src/tm_stm32f4_adc.o
  .debug_aranges
-                0x00000450       0x28 startup/startup_stm32f4xx.o
+                0x000007b8       0x80 src/tm_stm32f4_delay.o
+ .debug_aranges
+                0x00000838       0x98 src/tm_stm32f4_gpio.o
+ .debug_aranges
+                0x000008d0       0xb0 src/tm_stm32f4_hd44780.o
+ .debug_aranges
+                0x00000980       0x28 startup/startup_stm32f4xx.o
 
-.debug_ranges   0x00000000      0x400
+.debug_ranges   0x00000000      0x900
  .debug_ranges  0x00000000      0x138 StdPeriph_Driver/src/stm32f4xx_adc.o
- .debug_ranges  0x00000138       0x30 src/main.o
- .debug_ranges  0x00000168       0x20 src/system_stm32f4xx.o
- .debug_ranges  0x00000188       0xc0 src/tm_stm32f4_adc.o
- .debug_ranges  0x00000248       0x70 src/tm_stm32f4_delay.o
- .debug_ranges  0x000002b8       0x88 src/tm_stm32f4_gpio.o
- .debug_ranges  0x00000340       0xa0 src/tm_stm32f4_hd44780.o
- .debug_ranges  0x000003e0       0x20 startup/startup_stm32f4xx.o
+ .debug_ranges  0x00000138       0x78 StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .debug_ranges  0x000001b0      0x168 StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .debug_ranges  0x00000318      0x2e8 StdPeriph_Driver/src/stm32f4xx_tim.o
+ .debug_ranges  0x00000600       0x68 src/main.o
+ .debug_ranges  0x00000668       0x20 src/system_stm32f4xx.o
+ .debug_ranges  0x00000688       0xc0 src/tm_stm32f4_adc.o
+ .debug_ranges  0x00000748       0x70 src/tm_stm32f4_delay.o
+ .debug_ranges  0x000007b8       0x88 src/tm_stm32f4_gpio.o
+ .debug_ranges  0x00000840       0xa0 src/tm_stm32f4_hd44780.o
+ .debug_ranges  0x000008e0       0x20 startup/startup_stm32f4xx.o
 
-.debug_macro    0x00000000     0x201a
+.debug_macro    0x00000000     0x353d
  .debug_macro   0x00000000      0x24a StdPeriph_Driver/src/stm32f4xx_adc.o
  .debug_macro   0x0000024a      0x3c9 StdPeriph_Driver/src/stm32f4xx_adc.o
  .debug_macro   0x00000613       0x7f StdPeriph_Driver/src/stm32f4xx_adc.o
- .debug_macro   0x00000692      0x314 src/main.o
- .debug_macro   0x000009a6       0x16 src/main.o
- .debug_macro   0x000009bc       0x52 src/main.o
- .debug_macro   0x00000a0e       0x35 src/main.o
- .debug_macro   0x00000a43       0x9c src/main.o
- .debug_macro   0x00000adf       0x16 src/main.o
- .debug_macro   0x00000af5      0x10e src/main.o
- .debug_macro   0x00000c03       0x8d src/main.o
- .debug_macro   0x00000c90       0x52 src/main.o
- .debug_macro   0x00000ce2       0x1f src/main.o
- .debug_macro   0x00000d01       0x43 src/main.o
- .debug_macro   0x00000d44       0x20 src/main.o
- .debug_macro   0x00000d64      0x187 src/main.o
- .debug_macro   0x00000eeb      0x30d src/main.o
- .debug_macro   0x000011f8       0x16 src/main.o
- .debug_macro   0x0000120e       0x29 src/main.o
- .debug_macro   0x00001237       0x35 src/main.o
- .debug_macro   0x0000126c       0xaf src/main.o
- .debug_macro   0x0000131b       0x58 src/main.o
- .debug_macro   0x00001373       0x24 src/main.o
- .debug_macro   0x00001397       0x22 src/main.o
- .debug_macro   0x000013b9      0x1e6 src/system_stm32f4xx.o
- .debug_macro   0x0000159f      0x1e3 src/tm_stm32f4_adc.o
- .debug_macro   0x00001782      0x2a5 src/tm_stm32f4_delay.o
- .debug_macro   0x00001a27      0x1d2 src/tm_stm32f4_gpio.o
- .debug_macro   0x00001bf9       0xa9 src/tm_stm32f4_gpio.o
- .debug_macro   0x00001ca2      0x378 src/tm_stm32f4_hd44780.o
+ .debug_macro   0x00000692      0x1c3 StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .debug_macro   0x00000855      0x25f StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .debug_macro   0x00000ab4      0x267 StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .debug_macro   0x00000d1b      0x532 StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .debug_macro   0x0000124d      0x1ed StdPeriph_Driver/src/stm32f4xx_tim.o
+ .debug_macro   0x0000143a      0x735 StdPeriph_Driver/src/stm32f4xx_tim.o
+ .debug_macro   0x00001b6f      0x35a src/main.o
+ .debug_macro   0x00001ec9       0x16 src/main.o
+ .debug_macro   0x00001edf       0x52 src/main.o
+ .debug_macro   0x00001f31       0x35 src/main.o
+ .debug_macro   0x00001f66       0x9c src/main.o
+ .debug_macro   0x00002002       0x16 src/main.o
+ .debug_macro   0x00002018      0x10e src/main.o
+ .debug_macro   0x00002126       0x8d src/main.o
+ .debug_macro   0x000021b3       0x52 src/main.o
+ .debug_macro   0x00002205       0x1f src/main.o
+ .debug_macro   0x00002224       0x43 src/main.o
+ .debug_macro   0x00002267       0x20 src/main.o
+ .debug_macro   0x00002287      0x187 src/main.o
+ .debug_macro   0x0000240e      0x30d src/main.o
+ .debug_macro   0x0000271b       0x16 src/main.o
+ .debug_macro   0x00002731       0x29 src/main.o
+ .debug_macro   0x0000275a       0x35 src/main.o
+ .debug_macro   0x0000278f       0xaf src/main.o
+ .debug_macro   0x0000283e       0x58 src/main.o
+ .debug_macro   0x00002896       0x24 src/main.o
+ .debug_macro   0x000028ba       0x22 src/main.o
+ .debug_macro   0x000028dc      0x1e6 src/system_stm32f4xx.o
+ .debug_macro   0x00002ac2      0x1e3 src/tm_stm32f4_adc.o
+ .debug_macro   0x00002ca5      0x2a5 src/tm_stm32f4_delay.o
+ .debug_macro   0x00002f4a      0x1d2 src/tm_stm32f4_gpio.o
+ .debug_macro   0x0000311c       0xa9 src/tm_stm32f4_gpio.o
+ .debug_macro   0x000031c5      0x378 src/tm_stm32f4_hd44780.o
 
-.debug_line     0x00000000     0x3ab1
+.debug_line     0x00000000     0x5d6d
  .debug_line    0x00000000      0x964 StdPeriph_Driver/src/stm32f4xx_adc.o
- .debug_line    0x00000964      0x8b9 src/main.o
- .debug_line    0x0000121d      0x668 src/system_stm32f4xx.o
- .debug_line    0x00001885      0x862 src/tm_stm32f4_adc.o
- .debug_line    0x000020e7      0x85b src/tm_stm32f4_delay.o
- .debug_line    0x00002942      0x7e7 src/tm_stm32f4_gpio.o
- .debug_line    0x00003129      0x90d src/tm_stm32f4_hd44780.o
- .debug_line    0x00003a36       0x7b startup/startup_stm32f4xx.o
+ .debug_line    0x00000964      0x766 StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .debug_line    0x000010ca      0x9ac StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .debug_line    0x00001a76      0xec8 StdPeriph_Driver/src/stm32f4xx_tim.o
+ .debug_line    0x0000293e      0xb9b src/main.o
+ .debug_line    0x000034d9      0x668 src/system_stm32f4xx.o
+ .debug_line    0x00003b41      0x862 src/tm_stm32f4_adc.o
+ .debug_line    0x000043a3      0x85b src/tm_stm32f4_delay.o
+ .debug_line    0x00004bfe      0x7e7 src/tm_stm32f4_gpio.o
+ .debug_line    0x000053e5      0x90d src/tm_stm32f4_hd44780.o
+ .debug_line    0x00005cf2       0x7b startup/startup_stm32f4xx.o
 
-.debug_str      0x00000000    0x5af2a
- .debug_str     0x00000000    0x565a4 StdPeriph_Driver/src/stm32f4xx_adc.o
+.debug_str      0x00000000    0x5c8b0
+ .debug_str     0x00000000    0x56597 StdPeriph_Driver/src/stm32f4xx_adc.o
                               0x56773 (size before relaxing)
- .debug_str     0x000565a4     0x348b src/main.o
-                              0x59370 (size before relaxing)
- .debug_str     0x00059a2f      0x24b src/system_stm32f4xx.o
+ .debug_str     0x00056597      0x273 StdPeriph_Driver/src/stm32f4xx_gpio.o
+                              0x5612f (size before relaxing)
+ .debug_str     0x0005680a      0xb2e StdPeriph_Driver/src/stm32f4xx_rcc.o
+                              0x569b0 (size before relaxing)
+ .debug_str     0x00057338      0xc2f StdPeriph_Driver/src/stm32f4xx_tim.o
+                              0x56b23 (size before relaxing)
+ .debug_str     0x00057f67     0x35ae src/main.o
+                              0x597f8 (size before relaxing)
+ .debug_str     0x0005b515      0x12b src/system_stm32f4xx.o
                               0x5607a (size before relaxing)
- .debug_str     0x00059c7a      0x3a5 src/tm_stm32f4_adc.o
+ .debug_str     0x0005b640      0x39f src/tm_stm32f4_adc.o
                               0x56ac3 (size before relaxing)
- .debug_str     0x0005a01f      0x73b src/tm_stm32f4_delay.o
+ .debug_str     0x0005b9df      0x73b src/tm_stm32f4_delay.o
                               0x591f7 (size before relaxing)
- .debug_str     0x0005a75a      0x1f3 src/tm_stm32f4_gpio.o
+ .debug_str     0x0005c11a      0x1b9 src/tm_stm32f4_gpio.o
                               0x566d4 (size before relaxing)
- .debug_str     0x0005a94d      0x5dd src/tm_stm32f4_hd44780.o
+ .debug_str     0x0005c2d3      0x5dd src/tm_stm32f4_hd44780.o
                               0x596b9 (size before relaxing)
 
 .comment        0x00000000       0x6e
  .comment       0x00000000       0x6e StdPeriph_Driver/src/stm32f4xx_adc.o
                                  0x6f (size before relaxing)
+ .comment       0x0000006e       0x6f StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .comment       0x0000006e       0x6f StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .comment       0x0000006e       0x6f StdPeriph_Driver/src/stm32f4xx_tim.o
  .comment       0x0000006e       0x6f src/main.o
  .comment       0x0000006e       0x6f src/system_stm32f4xx.o
  .comment       0x0000006e       0x6f src/tm_stm32f4_adc.o
@@ -6066,12 +6255,15 @@ OUTPUT(proj2.elf elf32-littlearm)
  .comment       0x0000006e       0x6f src/tm_stm32f4_gpio.o
  .comment       0x0000006e       0x6f src/tm_stm32f4_hd44780.o
 
-.debug_frame    0x00000000     0x1164
+.debug_frame    0x00000000     0x29cc
  .debug_frame   0x00000000      0x5ec StdPeriph_Driver/src/stm32f4xx_adc.o
- .debug_frame   0x000005ec       0xb4 src/main.o
- .debug_frame   0x000006a0       0x7c src/system_stm32f4xx.o
- .debug_frame   0x0000071c      0x344 src/tm_stm32f4_adc.o
- .debug_frame   0x00000a60      0x1ec src/tm_stm32f4_delay.o
- .debug_frame   0x00000c4c      0x274 src/tm_stm32f4_gpio.o
- .debug_frame   0x00000ec0      0x278 src/tm_stm32f4_hd44780.o
- .debug_frame   0x00001138       0x2c /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x000005ec      0x23c StdPeriph_Driver/src/stm32f4xx_gpio.o
+ .debug_frame   0x00000828      0x6d4 StdPeriph_Driver/src/stm32f4xx_rcc.o
+ .debug_frame   0x00000efc      0xe54 StdPeriph_Driver/src/stm32f4xx_tim.o
+ .debug_frame   0x00001d50      0x1b8 src/main.o
+ .debug_frame   0x00001f08       0x7c src/system_stm32f4xx.o
+ .debug_frame   0x00001f84      0x344 src/tm_stm32f4_adc.o
+ .debug_frame   0x000022c8      0x1ec src/tm_stm32f4_delay.o
+ .debug_frame   0x000024b4      0x274 src/tm_stm32f4_gpio.o
+ .debug_frame   0x00002728      0x278 src/tm_stm32f4_hd44780.o
+ .debug_frame   0x000029a0       0x2c /home/nima/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.1.201707031232/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)

@@ -1,5 +1,5 @@
-src/main.o: ../src/main.c \
- /home/nima/MechatronicsClass/proj2/inc/defines.h \
+src/tm_stm32f4_pwm.o: ../src/tm_stm32f4_pwm.c \
+ /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_pwm.h \
  /home/nima/MechatronicsClass/proj2/CMSIS/device/stm32f4xx.h \
  /home/nima/MechatronicsClass/proj2/CMSIS/core/core_cm4.h \
  /home/nima/MechatronicsClass/proj2/CMSIS/core/core_cmInstr.h \
@@ -33,22 +33,14 @@ src/main.o: ../src/main.c \
  /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_usart.h \
  /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_wwdg.h \
  /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/misc.h \
- /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_delay.h \
  /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_rcc.h \
- /home/nima/MechatronicsClass/proj2/inc/defines.h \
- /home/nima/MechatronicsClass/proj2/inc/attributes.h \
- /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_hd44780.h \
  /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_gpio.h \
- /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_delay.h \
- /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_gpio.h \
- /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_adc.h \
- /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_adc.h \
- /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_pwm.h \
  /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_tim.h \
  /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_timer_properties.h \
- /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_rtc.h
+ /home/nima/MechatronicsClass/proj2/inc/defines.h \
+ /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_gpio.h
 
-/home/nima/MechatronicsClass/proj2/inc/defines.h:
+/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_pwm.h:
 
 /home/nima/MechatronicsClass/proj2/CMSIS/device/stm32f4xx.h:
 
@@ -116,30 +108,14 @@ src/main.o: ../src/main.c \
 
 /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/misc.h:
 
-/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_delay.h:
-
 /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_rcc.h:
 
-/home/nima/MechatronicsClass/proj2/inc/defines.h:
-
-/home/nima/MechatronicsClass/proj2/inc/attributes.h:
-
-/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_hd44780.h:
-
 /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_gpio.h:
-
-/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_delay.h:
-
-/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_gpio.h:
-
-/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_adc.h:
-
-/home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_adc.h:
-
-/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_pwm.h:
 
 /home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_tim.h:
 
 /home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_timer_properties.h:
 
-/home/nima/MechatronicsClass/proj2/StdPeriph_Driver/inc/stm32f4xx_rtc.h:
+/home/nima/MechatronicsClass/proj2/inc/defines.h:
+
+/home/nima/MechatronicsClass/proj2/inc/tm_stm32f4_gpio.h:
