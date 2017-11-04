@@ -88,7 +88,7 @@ void USB_Error_Handler(void)
   /* USER CODE END USB_Error_Handler */
 }
 
-static void write_line(){
+void write_line(){
 	 FRESULT res;                                          /* FatFs function common result code */
 	  uint32_t byteswritten, bytesread;                     /* File write/read counts */
 	  char wtext[] = "sictir\n"; /* File write buffer */
@@ -166,13 +166,9 @@ static void write_line(){
 
 	  /* Unlink the USB disk I/O driver */
 	  FATFS_UnLinkDriver(USBDISKPath);
-
-
-
-
 }
 
- void MSC_Application(void)
+ void USB_Application(void)
 {
 
 
@@ -297,7 +293,7 @@ static void USBH_UserProcess  (USBH_HandleTypeDef *phost, uint8_t id)
     
   case HOST_USER_CLASS_ACTIVE:
   Appli_state = APPLICATION_READY;
-  MSC_Application();
+  //MSC_Application();
   break;
 
   case HOST_USER_CONNECTION:

@@ -59,8 +59,8 @@
 #include "stm32f4xx_hal.h"
 
 typedef enum {
-  APPLICATION_IDLE = 0,  
-  APPLICATION_START,   
+  APPLICATION_IDLE = 0,
+  APPLICATION_START,
   APPLICATION_READY,
   APPLICATION_DISCONNECT,
 }ApplicationTypeDef;

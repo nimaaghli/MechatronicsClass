@@ -49,9 +49,18 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "fatfs.h"
-#include "usb_host.h"
+//#include "usb_host.h"
 
 /* USER CODE BEGIN Includes */
+#include "usb_host.h"
+#include "usbh_core.h"
+#include "usbh_msc.h"
+/* USB Host Core handle declaration */
+USBH_HandleTypeDef hUsbHostFS;
+ApplicationTypeDeff USB_state = USB_IDLE;
+static void USBH_UserPro (USBH_HandleTypeDef *phost, uint8_t id);
+static void USB_write(char *msg);
+
 
 /* USER CODE END Includes */
 
@@ -60,14 +69,19 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+#include "fatfs.h"
+FATFS USBDISKFatFs;           /* File system object for USB disk logical drive */
+FIL MyFile;                   /* File object */
+char USBDISKPath[4];          /* USB Host logical drive path */
+USBH_HandleTypeDef hUSB_Host; /* USB Host handle */
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void MX_USB_HOST_Process(void);
+static void USB_HOST_Process(void);
+static void USB_HOST_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -75,6 +89,157 @@ void MX_USB_HOST_Process(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+
+;
+
+/**
+* -- Insert your external function declaration here --
+*/
+/* USER CODE BEGIN 1 */
+void USB_Error_Handle(void)
+{
+  /* USER CODE BEGIN USB_Error_Handle */
+  /* User can add his own implementation to report the HAL error return state */
+ HAL_GPIO_WritePin(LD5_GPIO_Port,LD5_Pin,GPIO_PIN_SET);
+  while(1)
+  {
+  }
+  /* USER CODE END USB_Error_Handle */
+}
+
+
+static void USB_write(char *msg)
+{
+
+  FRESULT res;                                          /* FatFs function common result code */
+  uint32_t byteswritten, bytesread;                     /* File write/read counts */
+  char wtext[] = "BAS ESHIYA\n"; /* File write buffer */
+  uint8_t rtext[100];                                   /* File read buffer */
+
+  /* Register the file system object to the FatFs module */
+  if(f_mount(&USBDISKFatFs, (TCHAR const*)USBDISKPath, 0) != FR_OK)
+  {
+    /* FatFs Initialization Error */
+    USB_Error_Handle();
+  }
+  else
+  {
+
+      /* Create and Open a new text file object with write access */
+      if(f_open(&MyFile, "Even.TXT", FA_CREATE_ALWAYS | FA_WRITE) != FR_OK)
+      {
+        /* 'STM32.TXT' file Open for write Error */
+        USB_Error_Handle();
+      }
+      else
+      {
+        /* Write data to the text file */
+
+        res = f_write(&MyFile, msg, strlen(msg), (void *)&byteswritten);
+
+        if((byteswritten == 0) || (res != FR_OK))
+        {
+          /* 'STM32.TXT' file Write or EOF Error */
+          USB_Error_Handle();
+        }
+        else
+        {
+          /* Close the open text file */
+          f_close(&MyFile);
+
+        /* Open the text file object with read access */
+        if(f_open(&MyFile, "Even.TXT", FA_READ) != FR_OK)
+        {
+          /* 'STM32.TXT' file Open for read Error */
+          USB_Error_Handle();
+        }
+        else
+        {
+          /* Read data from the text file */
+          res = f_read(&MyFile, rtext, sizeof(rtext), (void *)&bytesread);
+
+          if((bytesread == 0) || (res != FR_OK))
+          {
+            /* 'STM32.TXT' file Read or EOF Error */
+            USB_Error_Handle();
+          }
+          else
+          {
+            /* Close the open text file */
+            f_close(&MyFile);
+
+            /* Compare read data with the expected data */
+            if((bytesread != byteswritten))
+            {
+              /* Read data is different from the expected data */
+              USB_Error_Handle();
+            }
+            else
+            {
+          /* Success of the demo: no error occurrence */
+              //BSP_LED_On(LED4);
+              HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_SET);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Unlink the USB disk I/O driver */
+  FATFS_UnLinkDriver(USBDISKPath);
+}
+
+static void USB_HOST_Init(void)
+{
+  /* Init Host Library,Add Supported Class and Start the library*/
+  USBH_Init(&hUsbHostFS, USBH_UserPro, HOST_FS);
+
+  USBH_RegisterClass(&hUsbHostFS, USBH_MSC_CLASS);
+
+  USBH_Start(&hUsbHostFS);
+}
+
+/*
+ * Background task
+*/
+static void USB_HOST_Process(void)
+{
+  /* USB Host Background task */
+    USBH_Process(&hUsbHostFS);
+}
+
+
+static void USBH_UserPro (USBH_HandleTypeDef *phost, uint8_t id)
+{
+
+  /* USER CODE BEGIN CALL_BACK_1 */
+  switch(id)
+  {
+  case HOST_USER_SELECT_CONFIGURATION:
+  break;
+
+  case HOST_USER_DISCONNECTION:
+  USB_state = USB_DISCONNECT;
+  break;
+
+  case HOST_USER_CLASS_ACTIVE:
+  USB_state = USB_READY;
+  //USB_write();
+  //MSC_Application();
+  break;
+
+  case HOST_USER_CONNECTION:
+  USB_state = USB_START;
+  break;
+
+  default:
+  break;
+  }
+  /* USER CODE END CALL_BACK_1 */
+}
+
+
 //variables need to be declared at the beginning
 char Rx_indx, Rx_data[2], Rx_Buffer[100], Transfer_cplt;
 //Interrupt callback routine
@@ -96,12 +261,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             {
             Rx_indx=0;
             Transfer_cplt=1;//transfer complete, data is ready to read
-            int len;
+
             //len=sprintf(Rx_Buffer,"%s\n",Rx_Buffer); //sprintf will return the length of 'buffer'
             //HAL_UART_Transmit(&huart2, (uint8_t *)&Rx_Buffer, len, 100);
             if(strncmp(Rx_Buffer, "1",strlen(Rx_Buffer)) == 0){
             	HAL_GPIO_WritePin(GPIOD, LD3_Pin, GPIO_PIN_SET);
-            	MX_write_line();
+            	//USB_write();
             }
             else if(strncmp(Rx_Buffer, "2",strlen(Rx_Buffer)) == 0){
             	HAL_GPIO_WritePin(GPIOD, LD4_Pin, GPIO_PIN_SET);
@@ -142,23 +307,35 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USB_HOST_Init();
+  USB_HOST_Init();
   MX_FATFS_Init();
   MX_USART2_UART_Init();
 
   /* USER CODE BEGIN 2 */
-  char ch='a';
+
+  char * ch;
+  ch="do bas eshiya\n";
   HAL_UART_Receive_IT(&huart2, Rx_data, 1);   //Activate receive intrupt
   HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 100);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
   while (1)
   {
   /* USER CODE END WHILE */
-    MX_USB_HOST_Process();
+    USB_HOST_Process();
+    switch(USB_state)
+         {
+         case USB_READY:
+           USB_write(ch);
+           USB_state = USB_IDLE;
+           break;
+
+         case USB_IDLE:
+         default:
+           break;
+   }
 
     //MSC_Application();
   /* USER CODE BEGIN 3 */
@@ -277,7 +454,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(OTG_FS_PowerSwitchOn_GPIO_Port, OTG_FS_PowerSwitchOn_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(OTG_FS_PowerSwitchOn_GPIO_Port, OTG_FS_PowerSwitchOn_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin 
