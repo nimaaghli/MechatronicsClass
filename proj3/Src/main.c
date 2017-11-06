@@ -55,12 +55,12 @@
 #include "usb_host.h"
 #include "usbh_core.h"
 #include "usbh_msc.h"
+#include <stdbool.h>
 /* USB Host Core handle declaration */
 USBH_HandleTypeDef hUsbHostFS;
 ApplicationTypeDeff USB_state = USB_IDLE;
+void USB_write(char *msg);
 static void USBH_UserPro (USBH_HandleTypeDef *phost, uint8_t id);
-static void USB_write(char *msg);
-
 
 /* USER CODE END Includes */
 
@@ -73,6 +73,8 @@ UART_HandleTypeDef huart2;
 FATFS USBDISKFatFs;           /* File system object for USB disk logical drive */
 FIL MyFile;                   /* File object */
 char USBDISKPath[4];          /* USB Host logical drive path */
+bool writeflag=false;
+char * msg;
 USBH_HandleTypeDef hUSB_Host; /* USB Host handle */
 /* USER CODE END PV */
 
@@ -80,9 +82,8 @@ USBH_HandleTypeDef hUSB_Host; /* USB Host handle */
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-static void USB_HOST_Process(void);
-static void USB_HOST_Init(void);
-
+void USB_HOST_Process(void);
+void USB_HOST_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
@@ -107,13 +108,61 @@ void USB_Error_Handle(void)
   /* USER CODE END USB_Error_Handle */
 }
 
+void USB_read(){
 
-static void USB_write(char *msg)
+	 FRESULT res;                                          /* FatFs function common result code */
+	  uint32_t byteswritten, bytesread;                     /* File write/read counts */
+	  char rtext[];                                   /* File read buffer */
+
+	  /* Register the file system object to the FatFs module */
+	  if(f_mount(&USBDISKFatFs, (TCHAR const*)USBDISKPath, 0) != FR_OK)
+	  {
+	    /* FatFs Initialization Error */
+	    USB_Error_Handle();
+	  }
+	  else
+	  {
+
+	        /* Open the text file object with read access */
+	        if(f_open(&MyFile, "bh1.TXT", FA_READ) != FR_OK)
+	        {
+	          /* 'STM32.TXT' file Open for read Error */
+	          USB_Error_Handle();
+	        }
+	        else
+	        {
+	          /* Read data from the text file */
+	          res = f_read(&MyFile, rtext, sizeof(rtext), (void *)&bytesread);
+	          HAL_UART_Transmit(&huart2, (uint8_t *)&rtext, strlen(rtext), 100);
+	          if((bytesread == 0) || (res != FR_OK))
+	          {
+	            /* 'STM32.TXT' file Read or EOF Error */
+	            USB_Error_Handle();
+	          }
+	          else
+	          {
+	            /* Close the open text file */
+	            f_close(&MyFile);
+
+	            /* Compare read data with the expected data */
+
+	          /* Success of the demo: no error occurrence */
+	              //BSP_LED_On(LED4);
+	              HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_SET);
+
+	          }
+	        }
+	      }
+
+
+	  /* Unlink the USB disk I/O driver */
+	  FATFS_UnLinkDriver(USBDISKPath);
+}
+void USB_write(char *msg)
 {
 
   FRESULT res;                                          /* FatFs function common result code */
   uint32_t byteswritten, bytesread;                     /* File write/read counts */
-  char wtext[] = "BAS ESHIYA\n"; /* File write buffer */
   uint8_t rtext[100];                                   /* File read buffer */
 
   /* Register the file system object to the FatFs module */
@@ -126,7 +175,7 @@ static void USB_write(char *msg)
   {
 
       /* Create and Open a new text file object with write access */
-      if(f_open(&MyFile, "Even.TXT", FA_CREATE_ALWAYS | FA_WRITE) != FR_OK)
+      if(f_open(&MyFile, "bh1.TXT", FA_CREATE_ALWAYS | FA_WRITE) != FR_OK)
       {
         /* 'STM32.TXT' file Open for write Error */
         USB_Error_Handle();
@@ -134,7 +183,6 @@ static void USB_write(char *msg)
       else
       {
         /* Write data to the text file */
-
         res = f_write(&MyFile, msg, strlen(msg), (void *)&byteswritten);
 
         if((byteswritten == 0) || (res != FR_OK))
@@ -148,7 +196,7 @@ static void USB_write(char *msg)
           f_close(&MyFile);
 
         /* Open the text file object with read access */
-        if(f_open(&MyFile, "Even.TXT", FA_READ) != FR_OK)
+        if(f_open(&MyFile, "bh1.TXT", FA_READ) != FR_OK)
         {
           /* 'STM32.TXT' file Open for read Error */
           USB_Error_Handle();
@@ -190,7 +238,7 @@ static void USB_write(char *msg)
   FATFS_UnLinkDriver(USBDISKPath);
 }
 
-static void USB_HOST_Init(void)
+void USB_HOST_Init(void)
 {
   /* Init Host Library,Add Supported Class and Start the library*/
   USBH_Init(&hUsbHostFS, USBH_UserPro, HOST_FS);
@@ -203,7 +251,7 @@ static void USB_HOST_Init(void)
 /*
  * Background task
 */
-static void USB_HOST_Process(void)
+void USB_HOST_Process(void)
 {
   /* USB Host Background task */
     USBH_Process(&hUsbHostFS);
@@ -266,7 +314,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             //HAL_UART_Transmit(&huart2, (uint8_t *)&Rx_Buffer, len, 100);
             if(strncmp(Rx_Buffer, "1",strlen(Rx_Buffer)) == 0){
             	HAL_GPIO_WritePin(GPIOD, LD3_Pin, GPIO_PIN_SET);
-            	//USB_write();
+            	msg="olan safehlama\n";
+            	writeflag=true;
+
+
             }
             else if(strncmp(Rx_Buffer, "2",strlen(Rx_Buffer)) == 0){
             	HAL_GPIO_WritePin(GPIOD, LD4_Pin, GPIO_PIN_SET);
@@ -313,10 +364,11 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-  char * ch;
-  ch="do bas eshiya\n";
+
+  char name[]="Please enter you command:\n";
+
   HAL_UART_Receive_IT(&huart2, Rx_data, 1);   //Activate receive intrupt
-  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 100);
+  HAL_UART_Transmit(&huart2, (uint8_t *)&name, strlen(name), 100);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -325,16 +377,21 @@ int main(void)
   {
   /* USER CODE END WHILE */
     USB_HOST_Process();
-    switch(USB_state)
-         {
-         case USB_READY:
-           USB_write(ch);
-           USB_state = USB_IDLE;
-           break;
+    if(writeflag==true){
+		switch(USB_state)
+			 {
+			 case USB_READY:
+			   //USB_write(msg);
+				 USB_read();
 
-         case USB_IDLE:
-         default:
-           break;
+			   USB_state = USB_IDLE;
+			   writeflag=false;
+			   break;
+
+			 case USB_IDLE:
+			 default:
+			   break;
+			 }
    }
 
     //MSC_Application();
