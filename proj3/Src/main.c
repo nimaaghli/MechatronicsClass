@@ -110,9 +110,9 @@ void USB_Error_Handle(void)
 
 void USB_read(){
 
-	 FRESULT res;                                          /* FatFs function common result code */
+	  FRESULT res;                                          /* FatFs function common result code */
 	  uint32_t byteswritten, bytesread;                     /* File write/read counts */
-	  char rtext[];                                   /* File read buffer */
+	  uint8_t rtext[100];                                   /* File read buffer */
 
 	  /* Register the file system object to the FatFs module */
 	  if(f_mount(&USBDISKFatFs, (TCHAR const*)USBDISKPath, 0) != FR_OK)
