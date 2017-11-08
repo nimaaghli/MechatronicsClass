@@ -49,6 +49,7 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "fatfs.h"
+
 //#include "usb_host.h"
 
 /* USER CODE BEGIN Includes */
@@ -66,6 +67,7 @@ static void USBH_UserPro (USBH_HandleTypeDef *phost, uint8_t id);
 
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
+SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
@@ -76,12 +78,14 @@ char USBDISKPath[4];          /* USB Host logical drive path */
 bool writeflag=false;
 char * msg;
 USBH_HandleTypeDef hUSB_Host; /* USB Host handle */
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_SPI1_Init(void);
 void USB_HOST_Process(void);
 void USB_HOST_Init(void);
 /* USER CODE BEGIN PFP */
@@ -338,7 +342,13 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	uint8_t adress,data,x_accel,y_accel,z_accel;
+	char buffer_x[4];
+	char buffer_y[4];
+	char buffer_z[4];
+	char newline[2] = "\n";
+	char dash[2] = "-";
+	__HAL_SPI_ENABLE(&hspi1);
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -361,12 +371,19 @@ int main(void)
   USB_HOST_Init();
   MX_FATFS_Init();
   MX_USART2_UART_Init();
+  MX_SPI1_Init();
 
   /* USER CODE BEGIN 2 */
-
-
+  HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+    adress=0x20;
+    if(!HAL_SPI_Transmit(&hspi1,&adress,1,50)==HAL_OK){
+  	  return 0;
+    }
+    data=0x67;
+    HAL_SPI_Transmit(&hspi1,&data,1,50);
+    HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
   char name[]="Please enter you command:\n";
-
+  x_accel=0;
   HAL_UART_Receive_IT(&huart2, Rx_data, 1);   //Activate receive intrupt
   HAL_UART_Transmit(&huart2, (uint8_t *)&name, strlen(name), 100);
   /* USER CODE END 2 */
@@ -376,23 +393,40 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-    USB_HOST_Process();
-    if(writeflag==true){
-		switch(USB_state)
-			 {
-			 case USB_READY:
-			   //USB_write(msg);
-				 USB_read();
-
-			   USB_state = USB_IDLE;
-			   writeflag=false;
-			   break;
-
-			 case USB_IDLE:
-			 default:
-			   break;
-			 }
-   }
+    //USB_HOST_Process();
+	adress=0x28|0x80;
+	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi1,&adress,1,50);
+	HAL_SPI_Receive(&hspi1,&x_accel,1,50);
+	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+	itoa(x_accel,buffer_x,10);
+	strcat(buffer_x,dash);
+	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_x, strlen(buffer_x), 100);
+	adress=0x2A|0x80;
+	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi1,&adress,1,50);
+	HAL_SPI_Receive(&hspi1,&y_accel,1,50);
+	itoa(y_accel,buffer_y,10);
+	strcat(buffer_y, newline);
+	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_y, strlen(buffer_y), 100);
+	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+	HAL_Delay(100);
+//    if(writeflag==true){
+//		switch(USB_state)
+//			 {
+//			 case USB_READY:
+//			   //USB_write(msg);
+//				 USB_read();
+//
+//			   USB_state = USB_IDLE;
+//			   writeflag=false;
+//			   break;
+//
+//			 case USB_IDLE:
+//			 default:
+//			   break;
+//			 }
+//   }
 
     //MSC_Application();
   /* USER CODE BEGIN 3 */
@@ -614,6 +648,28 @@ static void MX_GPIO_Init(void)
 
 }
 
+/* SPI1 init function */
+static void MX_SPI1_Init(void)
+{
+
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
