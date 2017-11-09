@@ -57,6 +57,8 @@
 #include "usbh_core.h"
 #include "usbh_msc.h"
 #include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
 /* USB Host Core handle declaration */
 USBH_HandleTypeDef hUsbHostFS;
 ApplicationTypeDeff USB_state = USB_IDLE;
@@ -68,6 +70,7 @@ static void USBH_UserPro (USBH_HandleTypeDef *phost, uint8_t id);
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
 SPI_HandleTypeDef hspi1;
+ADC_HandleTypeDef hadc3;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
@@ -86,6 +89,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_ADC3_Init(void);
 void USB_HOST_Process(void);
 void USB_HOST_Init(void);
 /* USER CODE BEGIN PFP */
@@ -101,6 +105,60 @@ void USB_HOST_Init(void);
 * -- Insert your external function declaration here --
 */
 /* USER CODE BEGIN 1 */
+
+
+char *ftoa(char *buffer, double d, int precision) {
+
+	long wholePart = (long) d;
+
+	// Deposit the whole part of the number.
+
+	itoa(wholePart,buffer,10);
+
+	// Now work on the faction if we need one.
+
+	if (precision > 0) {
+
+		// We do, so locate the end of the string and insert
+		// a decimal point.
+
+		char *endOfString = buffer;
+		while (*endOfString != '\0') endOfString++;
+		*endOfString++ = '.';
+
+		// Now work on the fraction, be sure to turn any negative
+		// values positive.
+
+		if (d < 0) {
+			d *= -1;
+			wholePart *= -1;
+		}
+
+		double fraction = d - wholePart;
+		while (precision > 0) {
+
+			// Multipleby ten and pull out the digit.
+
+			fraction *= 10;
+			wholePart = (long) fraction;
+			*endOfString++ = '0' + wholePart;
+
+			// Update the fraction and move on to the
+			// next digit.
+
+			fraction -= wholePart;
+			precision--;
+		}
+
+		// Terminate the string.
+
+		*endOfString = '\0';
+	}
+
+   return buffer;
+}
+
+
 void USB_Error_Handle(void)
 {
   /* USER CODE BEGIN USB_Error_Handle */
@@ -343,10 +401,16 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	uint8_t adress,data,x_accel,y_accel,z_accel;
+	uint16_t ADC_val;
+    double voltage;
 	char buffer_x[4];
 	char buffer_y[4];
 	char buffer_z[4];
-	char newline[2] = "\n";
+	char buffer_adc[20];
+	char newline[2] = "\r";
+	char clearscreen[7] = "\033[2J";
+	char setozerozeo[9] = "\033[0;0H";
+
 	char dash[2] = "-";
 	__HAL_SPI_ENABLE(&hspi1);
   /* USER CODE END 1 */
@@ -372,6 +436,7 @@ int main(void)
   MX_FATFS_Init();
   MX_USART2_UART_Init();
   MX_SPI1_Init();
+  MX_ADC3_Init();
 
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
@@ -382,10 +447,13 @@ int main(void)
     data=0x67;
     HAL_SPI_Transmit(&hspi1,&data,1,50);
     HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
-  char name[]="Please enter you command:\n";
+  char name[]="Please enter you command:\n\r";
   x_accel=0;
   HAL_UART_Receive_IT(&huart2, Rx_data, 1);   //Activate receive intrupt
   HAL_UART_Transmit(&huart2, (uint8_t *)&name, strlen(name), 100);
+  //HAL_UART_Transmit(&huart2, (uint8_t *)&clearscreen, strlen(clearscreen), 100); //clear console
+  //HAL_UART_Transmit(&huart2, (uint8_t *)&setozerozeo, strlen(setozerozeo), 100); //set cursor to 0,0
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -393,30 +461,44 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-    //USB_HOST_Process();
-	adress=0x28|0x80;
-	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi1,&adress,1,50);
-	HAL_SPI_Receive(&hspi1,&x_accel,1,50);
-	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
-	itoa(x_accel,buffer_x,10);
-	strcat(buffer_x,dash);
-	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_x, strlen(buffer_x), 100);
-	adress=0x2A|0x80;
-	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi1,&adress,1,50);
-	HAL_SPI_Receive(&hspi1,&y_accel,1,50);
-	itoa(y_accel,buffer_y,10);
-	strcat(buffer_y, newline);
-	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_y, strlen(buffer_y), 100);
-	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
-	HAL_Delay(100);
+    USB_HOST_Process();
+
+//	adress=0x28|0x80;
+//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+//	HAL_SPI_Transmit(&hspi1,&adress,1,50);
+//	HAL_SPI_Receive(&hspi1,&x_accel,1,50);
+//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+//	itoa(x_accel,buffer_x,10);
+//	strcat(buffer_x,dash);
+//	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_x, strlen(buffer_x), 100);
+//	adress=0x2A|0x80;
+//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+//	HAL_SPI_Transmit(&hspi1,&adress,1,50);
+//	HAL_SPI_Receive(&hspi1,&y_accel,1,50);
+//	itoa(y_accel,buffer_y,10);
+//	strcat(buffer_y, newline);
+//	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_y, strlen(buffer_y), 100);
+//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+
+	    HAL_ADC_Start(&hadc3);
+	    HAL_ADC_PollForConversion(&hadc3, 100);
+	    ADC_val = HAL_ADC_GetValue(&hadc3);
+	    HAL_ADC_Stop(&hadc3);
+	    voltage=ADC_val*3.3/(float)4095;
+	    //itoa(voltage,buffer_adc,10);
+	    //sprintf(buffer_adc,"a=%1.1f\n",(float)3.3);
+        //memcpy(buffer_adc,&voltage,sizeof(voltage));
+	    //strcat(buffer_adc, voltage);
+	    ftoa(buffer_adc, voltage, 2);
+	    strcat(buffer_adc, newline);
+	    //HAL_UART_Transmit(&huart2,(uint8_t*)&buffer_adc,strlen(buffer_adc), 100);
+	    HAL_Delay(100);
 //    if(writeflag==true){
 //		switch(USB_state)
 //			 {
 //			 case USB_READY:
-//			   //USB_write(msg);
-//				 USB_read();
+//			   USB_write(msg);
+//			   //USB_read();
 //
 //			   USB_state = USB_IDLE;
 //			   writeflag=false;
@@ -510,6 +592,42 @@ static void MX_USART2_UART_Init(void)
 
 }
 
+static void MX_ADC3_Init(void)
+{
+
+  ADC_ChannelConfTypeDef sConfig;
+
+    /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+    */
+  hadc3.Instance = ADC3;
+  hadc3.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc3.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc3.Init.ScanConvMode = DISABLE;
+  hadc3.Init.ContinuousConvMode = DISABLE;
+  hadc3.Init.DiscontinuousConvMode = ENABLE;
+  hadc3.Init.NbrOfDiscConversion = 1;
+  hadc3.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc3.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc3.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc3.Init.NbrOfConversion = 1;
+  hadc3.Init.DMAContinuousRequests = DISABLE;
+  hadc3.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  if (HAL_ADC_Init(&hadc3) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+    /**Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+    */
+  sConfig.Channel = ADC_CHANNEL_11;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+  if (HAL_ADC_ConfigChannel(&hadc3, &sConfig) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
 /** Configure pins as 
         * Analog 
         * Input 
