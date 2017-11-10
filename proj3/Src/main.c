@@ -213,7 +213,7 @@ void USB_read(){
 
 	          /* Success of the demo: no error occurrence */
 	              //BSP_LED_On(LED4);
-	              HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_SET);
+	              HAL_GPIO_TogglePin(LD4_GPIO_Port,LD4_Pin);
 
 	          }
 	        }
@@ -240,14 +240,17 @@ void USB_write(char *msg)
   {
 
       /* Create and Open a new text file object with write access */
-      if(f_open(&MyFile, "bh1.TXT", FA_CREATE_ALWAYS | FA_WRITE) != FR_OK)
+      if(f_open(&MyFile, "DATA.TXT", FA_OPEN_ALWAYS | FA_WRITE) != FR_OK)
       {
         /* 'STM32.TXT' file Open for write Error */
         USB_Error_Handle();
       }
+
       else
       {
+
         /* Write data to the text file */
+    	res = f_lseek(&MyFile, f_size(&MyFile));
         res = f_write(&MyFile, msg, strlen(msg), (void *)&byteswritten);
 
         if((byteswritten == 0) || (res != FR_OK))
@@ -259,42 +262,43 @@ void USB_write(char *msg)
         {
           /* Close the open text file */
           f_close(&MyFile);
+          HAL_GPIO_TogglePin(LD4_GPIO_Port,LD4_Pin);
 
-        /* Open the text file object with read access */
-        if(f_open(&MyFile, "bh1.TXT", FA_READ) != FR_OK)
-        {
-          /* 'STM32.TXT' file Open for read Error */
-          USB_Error_Handle();
-        }
-        else
-        {
-          /* Read data from the text file */
-          res = f_read(&MyFile, rtext, sizeof(rtext), (void *)&bytesread);
-
-          if((bytesread == 0) || (res != FR_OK))
-          {
-            /* 'STM32.TXT' file Read or EOF Error */
-            USB_Error_Handle();
-          }
-          else
-          {
-            /* Close the open text file */
-            f_close(&MyFile);
-
-            /* Compare read data with the expected data */
-            if((bytesread != byteswritten))
-            {
-              /* Read data is different from the expected data */
-              USB_Error_Handle();
-            }
-            else
-            {
-          /* Success of the demo: no error occurrence */
-              //BSP_LED_On(LED4);
-              HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_SET);
-            }
-          }
-        }
+//        /* Open the text file object with read access */
+//        if(f_open(&MyFile, "BH1.TXT", FA_READ) != FR_OK)
+//        {
+//          /* 'STM32.TXT' file Open for read Error */
+//          USB_Error_Handle();
+//        }
+//        else
+//        {
+//          /* Read data from the text file */
+//          res = f_read(&MyFile, rtext, sizeof(rtext), (void *)&bytesread);
+//
+//          if((bytesread == 0) || (res != FR_OK))
+//          {
+//            /* 'STM32.TXT' file Read or EOF Error */
+//            USB_Error_Handle();
+//          }
+//          else
+//          {
+//            /* Close the open text file */
+//            f_close(&MyFile);
+//
+//            /* Compare read data with the expected data */
+//            if((bytesread != byteswritten))
+//            {
+//              /* Read data is different from the expected data */
+//              USB_Error_Handle();
+//            }
+//            else
+//            {
+//          /* Success of the demo: no error occurrence */
+//              //BSP_LED_On(LED4);
+//              HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_SET);
+//            }
+//          }
+//        }
       }
     }
   }
@@ -362,6 +366,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     uint8_t i;
     if (huart->Instance == USART2)  //current UART
         {
+    	HAL_GPIO_TogglePin(GPIOD, LD6_Pin);
     	if(mode_2==true){
     		mode_2=false;
     		mode_main_menue=true;
@@ -383,13 +388,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             //HAL_UART_Transmit(&huart2, (uint8_t *)&Rx_Buffer, len, 100);
             if(strncmp(Rx_Buffer, "1",strlen(Rx_Buffer)) == 0){
             	HAL_GPIO_WritePin(GPIOD, LD3_Pin, GPIO_PIN_SET);
-            	msg="olan safehlama\n";
-            	writeflag=true;
+            	mode_1=true;
+
 
 
             }
             else if(strncmp(Rx_Buffer, "2",strlen(Rx_Buffer)) == 0){
-            	HAL_GPIO_WritePin(GPIOD, LD4_Pin, GPIO_PIN_SET);
+            	HAL_GPIO_WritePin(GPIOD, LD6_Pin, GPIO_PIN_SET);
             	mode_2=true;
             }
             else if(strncmp(Rx_Buffer, "3",strlen(Rx_Buffer)) == 0){
@@ -411,14 +416,16 @@ int main(void)
 	uint8_t adress,data,x_accel,y_accel,z_accel;
 	uint16_t ADC_val;
     double voltage;
-	char buffer_x[4];
-	char buffer_y[4];
+	char buffer_x[5];
+	char buffer_y[5];
 	char buffer_z[4];
+	char buffer_xyz[45]="";
 	char buffer_adc[20];
-	char newline[2] = "\r";
+	char newline[4] = "\r\n";
 	char clearscreen[7] = "\033[2J";
 	char setozerozeo[9] = "\033[0;0H";
-	char dash[2] = "-";
+	char dash[2] = ",";
+	char space[11] = "          ";
 	mode_main_menue=true;
 	__HAL_SPI_ENABLE(&hspi1);
   /* USER CODE END 1 */
@@ -456,6 +463,7 @@ int main(void)
     HAL_SPI_Transmit(&hspi1,&data,1,50);
     HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
   char name[]="Please enter you command:\n\r";
+  msg="sina:\n";
   x_accel=0;
   HAL_UART_Receive_IT(&huart2, Rx_data, 1);   //Activate receive intrupt
 
@@ -473,24 +481,12 @@ int main(void)
   /* USER CODE END WHILE */
     USB_HOST_Process();
 
-//	adress=0x28|0x80;
-//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
-//	HAL_SPI_Transmit(&hspi1,&adress,1,50);
-//	HAL_SPI_Receive(&hspi1,&x_accel,1,50);
-//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
-//	itoa(x_accel,buffer_x,10);
-//	strcat(buffer_x,dash);
-//	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_x, strlen(buffer_x), 100);
-//	adress=0x2A|0x80;
-//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
-//	HAL_SPI_Transmit(&hspi1,&adress,1,50);
-//	HAL_SPI_Receive(&hspi1,&y_accel,1,50);
-//	itoa(y_accel,buffer_y,10);
-//	strcat(buffer_y, newline);
-//	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_y, strlen(buffer_y), 100);
-//	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+
     if(mode_main_menue){
+    	 HAL_UART_Transmit(&huart2, (uint8_t *)&clearscreen, strlen(clearscreen), 100); //clear console
+    	 HAL_UART_Transmit(&huart2, (uint8_t *)&setozerozeo, strlen(setozerozeo), 100); //set cursor to 0,0
     	 HAL_UART_Transmit(&huart2, (uint8_t *)&name, strlen(name), 100);
+    	 HAL_UART_Receive_IT(&huart2, Rx_data, 1);   //Activate receive intrupt
     	 mode_main_menue=false;
     }
     else if(mode_2){
@@ -506,23 +502,69 @@ int main(void)
 		HAL_UART_Transmit(&huart2,(uint8_t*)&buffer_adc,strlen(buffer_adc), 100);
 		HAL_Delay(100);
     }
+    else if(mode_1){
+		switch(USB_state)
+			 {
+			 case USB_READY:
+				 for(int i=0;i<400;++i){
+					 	//Read ADC starts here
+						HAL_ADC_Start(&hadc3);
+						HAL_ADC_PollForConversion(&hadc3, 100);
+						ADC_val = HAL_ADC_GetValue(&hadc3);
+						HAL_ADC_Stop(&hadc3);
+						voltage=ADC_val*3.3/(float)4095;
+						ftoa(buffer_adc, voltage, 3);
+						strcat(buffer_adc, space);
+						strcat(buffer_xyz,buffer_adc);
+						//HAL_UART_Transmit(&huart2,(uint8_t*)&buffer_adc,strlen(buffer_adc), 100);
 
-//    if(writeflag==true){
-//		switch(USB_state)
-//			 {
-//			 case USB_READY:
-//			   USB_write(msg);
-//			   //USB_read();
-//
-//			   USB_state = USB_IDLE;
-//			   writeflag=false;
-//			   break;
-//
-//			 case USB_IDLE:
-//			 default:
-//			   break;
-//			 }
-//   }
+					 	//SPI xyz accelemeter starts here
+						adress=0x28|0x80;
+						HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+						HAL_SPI_Transmit(&hspi1,&adress,1,50);
+						HAL_SPI_Receive(&hspi1,&x_accel,1,50);
+						HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+						itoa(x_accel,buffer_x,10);
+						strcat(buffer_x,dash);
+						strcat(buffer_xyz,buffer_x);
+						//HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_x, strlen(buffer_x), 100);
+						adress=0x2A|0x80;
+						HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+						HAL_SPI_Transmit(&hspi1,&adress,1,50);
+						HAL_SPI_Receive(&hspi1,&y_accel,1,50);
+						itoa(y_accel,buffer_y,10);
+						strcat(buffer_y, dash);
+						strcat(buffer_xyz, buffer_y);
+						//HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_xyz, strlen(buffer_xyz), 100);
+						HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+
+						adress=0x2C|0x80;
+						HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+						HAL_SPI_Transmit(&hspi1,&adress,1,50);
+						HAL_SPI_Receive(&hspi1,&z_accel,1,50);
+						itoa(z_accel,buffer_z,10);
+
+						strcat(buffer_xyz, buffer_z);
+						strcat(buffer_xyz, newline);
+						HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_xyz, strlen(buffer_xyz), 100);
+						HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+						USB_write(buffer_xyz);
+						*buffer_xyz=NULL;
+						HAL_Delay(25);
+
+				 }
+				 mode_1=false;
+				 mode_main_menue=true;
+			   //USB_read();
+
+			   //USB_state = USB_IDLE;
+			   break;
+
+			 case USB_IDLE:
+			 default:
+			   break;
+			 }
+   }
 
     //MSC_Application();
   /* USER CODE BEGIN 3 */
