@@ -81,7 +81,10 @@ char USBDISKPath[4];          /* USB Host logical drive path */
 bool writeflag=false;
 char * msg;
 USBH_HandleTypeDef hUSB_Host; /* USB Host handle */
-
+bool mode_main_menue=false;
+bool mode_1=false;
+bool mode_2=false;
+bool mode_3=false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -359,7 +362,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     uint8_t i;
     if (huart->Instance == USART2)  //current UART
         {
-
+    	if(mode_2==true){
+    		mode_2=false;
+    		mode_main_menue=true;
+    		return;
+    	}
         if (Rx_indx==0) {for (i=0;i<100;i++) Rx_Buffer[i]=0;}   //clear Rx_Buffer before receiving new data
 
         if (Rx_data[0]!=13) //if received data different from ascii 13 (enter)
@@ -383,6 +390,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             }
             else if(strncmp(Rx_Buffer, "2",strlen(Rx_Buffer)) == 0){
             	HAL_GPIO_WritePin(GPIOD, LD4_Pin, GPIO_PIN_SET);
+            	mode_2=true;
             }
             else if(strncmp(Rx_Buffer, "3",strlen(Rx_Buffer)) == 0){
             	HAL_GPIO_WritePin(GPIOD, LD5_Pin, GPIO_PIN_SET);
@@ -410,8 +418,8 @@ int main(void)
 	char newline[2] = "\r";
 	char clearscreen[7] = "\033[2J";
 	char setozerozeo[9] = "\033[0;0H";
-
 	char dash[2] = "-";
+	mode_main_menue=true;
 	__HAL_SPI_ENABLE(&hspi1);
   /* USER CODE END 1 */
 
@@ -450,7 +458,7 @@ int main(void)
   char name[]="Please enter you command:\n\r";
   x_accel=0;
   HAL_UART_Receive_IT(&huart2, Rx_data, 1);   //Activate receive intrupt
-  HAL_UART_Transmit(&huart2, (uint8_t *)&name, strlen(name), 100);
+
   //HAL_UART_Transmit(&huart2, (uint8_t *)&clearscreen, strlen(clearscreen), 100); //clear console
   //HAL_UART_Transmit(&huart2, (uint8_t *)&setozerozeo, strlen(setozerozeo), 100); //set cursor to 0,0
 
@@ -460,6 +468,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+
   /* USER CODE END WHILE */
     USB_HOST_Process();
 
@@ -479,20 +489,24 @@ int main(void)
 //	strcat(buffer_y, newline);
 //	HAL_UART_Transmit(&huart2,(uint8_t *)&buffer_y, strlen(buffer_y), 100);
 //	HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);
+    if(mode_main_menue){
+    	 HAL_UART_Transmit(&huart2, (uint8_t *)&name, strlen(name), 100);
+    	 mode_main_menue=false;
+    }
+    else if(mode_2){
+    	HAL_UART_Transmit(&huart2, (uint8_t *)&clearscreen, strlen(clearscreen), 100); //clear console
+    	HAL_UART_Transmit(&huart2, (uint8_t *)&setozerozeo, strlen(setozerozeo), 100); //set cursor to 0,0
+		HAL_ADC_Start(&hadc3);
+		HAL_ADC_PollForConversion(&hadc3, 100);
+		ADC_val = HAL_ADC_GetValue(&hadc3);
+		HAL_ADC_Stop(&hadc3);
+		voltage=ADC_val*3.3/(float)4095;
+		ftoa(buffer_adc, voltage, 3);
+		strcat(buffer_adc, newline);
+		HAL_UART_Transmit(&huart2,(uint8_t*)&buffer_adc,strlen(buffer_adc), 100);
+		HAL_Delay(100);
+    }
 
-	    HAL_ADC_Start(&hadc3);
-	    HAL_ADC_PollForConversion(&hadc3, 100);
-	    ADC_val = HAL_ADC_GetValue(&hadc3);
-	    HAL_ADC_Stop(&hadc3);
-	    voltage=ADC_val*3.3/(float)4095;
-	    //itoa(voltage,buffer_adc,10);
-	    //sprintf(buffer_adc,"a=%1.1f\n",(float)3.3);
-        //memcpy(buffer_adc,&voltage,sizeof(voltage));
-	    //strcat(buffer_adc, voltage);
-	    ftoa(buffer_adc, voltage, 2);
-	    strcat(buffer_adc, newline);
-	    //HAL_UART_Transmit(&huart2,(uint8_t*)&buffer_adc,strlen(buffer_adc), 100);
-	    HAL_Delay(100);
 //    if(writeflag==true){
 //		switch(USB_state)
 //			 {
