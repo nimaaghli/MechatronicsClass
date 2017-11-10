@@ -366,7 +366,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     uint8_t i;
     if (huart->Instance == USART2)  //current UART
         {
-    	HAL_GPIO_TogglePin(GPIOD, LD6_Pin);
     	if(mode_2==true){
     		mode_2=false;
     		mode_main_menue=true;
@@ -506,7 +505,7 @@ int main(void)
 		switch(USB_state)
 			 {
 			 case USB_READY:
-				 for(int i=0;i<400;++i){
+				 for(int i=0;i<200;++i){
 					 	//Read ADC starts here
 						HAL_ADC_Start(&hadc3);
 						HAL_ADC_PollForConversion(&hadc3, 100);
