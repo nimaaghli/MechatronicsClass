@@ -1,0 +1,14 @@
+#include "untitled.pt"
+
+
+const xpc_ParamMappingInfo  xpcparamsMMI[] =
+  {
+    {
+      {untitled_PT},
+      "untitled",
+      "",
+      "untitled",
+      0,
+      16,
+    },
+  };

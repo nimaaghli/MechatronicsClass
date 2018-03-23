@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	<SubSystem>
+		<Name>Async Rate Transition </Name>
+		<xPCName>speed2/Async Rate Transition </xPCName>
+		<signal>
+			<sigName>Rate Transition</sigName>
+			<xpcsigName>Async Rate Transition /Rate Transition</xpcsigName>
+			<sigWidth>1</sigWidth>
+			<sigDim>[1, 1]</sigDim>
+		</signal>
+	</SubSystem>
+	<SubSystem>
+		<Name>Compare
+To Zero</Name>
+		<xPCName>speed2/Compare To Zero</xPCName>
+		<block>
+			<blkName>Constant</blkName>
+			<xpcblkName>Compare To Zero/Constant</xpcblkName>
+			<SLblockPath>speed2/Compare To Zero/Constant</SLblockPath>
+			<isSrc>[1 0 1]</isSrc>
+			<parameter>
+				<paramName>Value</paramName>
+				<dim>[1, 1]</dim>
+			</parameter>
+		</block>
+		<signal>
+			<sigName>Compare</sigName>
+			<xpcsigName>Compare To Zero/Compare</xpcsigName>
+			<sigWidth>1</sigWidth>
+			<sigDim>[1, 1]</sigDim>
+		</signal>
+	</SubSystem>
+	<SubSystem>
+		<Name>J-K
+Flip-Flop</Name>
+		<xPCName>speed2/J-K Flip-Flop</xPCName>
+		<SubSystem>
+			<Name>J-K
+Flip-Flop</Name>
+			<xPCName>speed2/J-K Flip-Flop/J-K Flip-Flop</xPCName>
+			<block>
+				<blkName>Q</blkName>
+				<xpcblkName>J-K Flip-Flop/J-K Flip-Flop/Q</xpcblkName>
+				<SLblockPath>speed2/J-K Flip-Flop/J-K Flip-Flop/Q</SLblockPath>
+				<isSrc>[0 1 0]</isSrc>
+				<parameter>
+					<paramName>InitialOutput</paramName>
+					<dim>[1, 1]</dim>
+				</parameter>
+			</block>
+			<block>
+				<blkName>!Q</blkName>
+				<xpcblkName>J-K Flip-Flop/J-K Flip-Flop/!Q</xpcblkName>
+				<SLblockPath>speed2/J-K Flip-Flop/J-K Flip-Flop/!Q</SLblockPath>
+				<isSrc>[0 1 0]</isSrc>
+				<parameter>
+					<paramName>InitialOutput</paramName>
+					<dim>[1, 1]</dim>
+				</parameter>
+			</block>
+			<block>
+				<blkName>Logic</blkName>
+				<xpcblkName>J-K Flip-Flop/J-K Flip-Flop/Logic</xpcblkName>
+				<SLblockPath>speed2/J-K Flip-Flop/J-K Flip-Flop/Logic</SLblockPath>
+				<isSrc>[0 1 1]</isSrc>
+				<parameter>
+					<paramName>TruthTable</paramName>
+					<dim>[8, 2]</dim>
+				</parameter>
+			</block>
+			<block>
+				<blkName>Memory</blkName>
+				<xpcblkName>J-K Flip-Flop/J-K Flip-Flop/Memory</xpcblkName>
+				<SLblockPath>speed2/J-K Flip-Flop/J-K Flip-Flop/Memory</SLblockPath>
+				<isSrc>[0 1 1]</isSrc>
+				<parameter>
+					<paramName>X0</paramName>
+					<dim>[1, 1]</dim>
+				</parameter>
+			</block>
+			<signal>
+				<sigName>Logic</sigName>
+				<xpcsigName>J-K Flip-Flop/J-K Flip-Flop/Logic</xpcsigName>
+				<sigWidth>2</sigWidth>
+				<sigDim>[2, 1]</sigDim>
+			</signal>
+			<signal>
+				<sigName>Memory</sigName>
+				<xpcsigName>J-K Flip-Flop/J-K Flip-Flop/Memory</xpcsigName>
+				<sigWidth>1</sigWidth>
+				<sigDim>[1, 1]</sigDim>
+			</signal>
+		</SubSystem>
+	</SubSystem>
+	<SubSystem>
+		<Name>Sample
+and Hold1</Name>
+		<xPCName>speed2/Sample and Hold1</xPCName>
+		<block>
+			<blkName>
+			</blkName>
+			<xpcblkName>Sample and Hold1/ </xpcblkName>
+			<SLblockPath>speed2/Sample and Hold1/ </SLblockPath>
+			<isSrc>[0 1 0]</isSrc>
+			<parameter>
+				<paramName>InitialOutput</paramName>
+				<dim>[1, 1]</dim>
+			</parameter>
+		</block>
+		<signal>
+			<sigName>In</sigName>
+			<xpcsigName>Sample and Hold1/In</xpcsigName>
+			<sigWidth>1</sigWidth>
+			<sigDim>[1, 1]</sigDim>
+		</signal>
+	</SubSystem>
+	<SubSystem>
+		<Name>Sample
+and Hold2</Name>
+		<xPCName>speed2/Sample and Hold2</xPCName>
+		<block>
+			<blkName>
+			</blkName>
+			<xpcblkName>Sample and Hold2/ </xpcblkName>
+			<SLblockPath>speed2/Sample and Hold2/ </SLblockPath>
+			<isSrc>[0 1 0]</isSrc>
+			<parameter>
+				<paramName>InitialOutput</paramName>
+				<dim>[1, 1]</dim>
+			</parameter>
+		</block>
+		<signal>
+			<sigName>In</sigName>
+			<xpcsigName>Sample and Hold2/In</xpcsigName>
+			<sigWidth>1</sigWidth>
+			<sigDim>[1, 1]</sigDim>
+		</signal>
+	</SubSystem>
+	<SubSystem>
+		<Name>Sample
+and Hold3</Name>
+		<xPCName>speed2/Sample and Hold3</xPCName>
+		<block>
+			<blkName>
+			</blkName>
+			<xpcblkName>Sample and Hold3/ </xpcblkName>
+			<SLblockPath>speed2/Sample and Hold3/ </SLblockPath>
+			<isSrc>[0 1 0]</isSrc>
+			<parameter>
+				<paramName>InitialOutput</paramName>
+				<dim>[1, 1]</dim>
+			</parameter>
+		</block>
+		<signal>
+			<sigName>In</sigName>
+			<xpcsigName>Sample and Hold3/In</xpcsigName>
+			<sigWidth>1</sigWidth>
+			<sigDim>[1, 1]</sigDim>
+		</signal>
+	</SubSystem>
+	<SubSystem>
+		<Name>Scope </Name>
+		<xPCName>speed2/Scope </xPCName>
+	</SubSystem>
+	<SubSystem>
+		<Name>Scope 1</Name>
+		<xPCName>speed2/Scope 1</xPCName>
+	</SubSystem>
+	<SubSystem>
+		<Name>Scope 2</Name>
+		<xPCName>speed2/Scope 2</xPCName>
+	</SubSystem>
+	<SubSystem>
+		<Name>current</Name>
+		<xPCName>speed2/current</xPCName>
+	</SubSystem>
+	<block>
+		<blkName>1 rev=360 degree</blkName>
+		<xpcblkName>1 rev=360 degree</xpcblkName>
+		<SLblockPath>speed2/1 rev=360 degree</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Value</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>1 rev=360 degree1</blkName>
+		<xpcblkName>1 rev=360 degree1</xpcblkName>
+		<SLblockPath>speed2/1 rev=360 degree1</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Value</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>24 counts=1 rev</blkName>
+		<xpcblkName>24 counts=1 rev</xpcblkName>
+		<SLblockPath>speed2/24 counts=1 rev</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Value</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>24 counts=1 rev1</blkName>
+		<xpcblkName>24 counts=1 rev1</xpcblkName>
+		<SLblockPath>speed2/24 counts=1 rev1</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Value</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Constant</blkName>
+		<xpcblkName>Constant</xpcblkName>
+		<SLblockPath>speed2/Constant</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Value</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>converstion factor 21.3:1</blkName>
+		<xpcblkName>converstion factor 21.3:1</xpcblkName>
+		<SLblockPath>speed2/converstion factor 21.3:1</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Value</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>converstion factor 21.3:2</blkName>
+		<xpcblkName>converstion factor 21.3:2</xpcblkName>
+		<SLblockPath>speed2/converstion factor 21.3:2</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Value</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Pulse
+Generator</blkName>
+		<xpcblkName>Pulse Generator</xpcblkName>
+		<SLblockPath>speed2/Pulse Generator</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Amplitude</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>Period</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>PulseWidth</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>PhaseDelay</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Gain</blkName>
+		<xpcblkName>Gain</xpcblkName>
+		<SLblockPath>speed2/Gain</SLblockPath>
+		<isSrc>[0 1 1]</isSrc>
+		<parameter>
+			<paramName>Gain</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Gain1</blkName>
+		<xpcblkName>Gain1</xpcblkName>
+		<SLblockPath>speed2/Gain1</SLblockPath>
+		<isSrc>[0 1 1]</isSrc>
+		<parameter>
+			<paramName>Gain</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Gain2</blkName>
+		<xpcblkName>Gain2</xpcblkName>
+		<SLblockPath>speed2/Gain2</SLblockPath>
+		<isSrc>[0 1 1]</isSrc>
+		<parameter>
+			<paramName>Gain</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Memory</blkName>
+		<xpcblkName>Memory</xpcblkName>
+		<SLblockPath>speed2/Memory</SLblockPath>
+		<isSrc>[0 1 1]</isSrc>
+		<parameter>
+			<paramName>X0</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Memory1</blkName>
+		<xpcblkName>Memory1</xpcblkName>
+		<SLblockPath>speed2/Memory1</SLblockPath>
+		<isSrc>[0 1 1]</isSrc>
+		<parameter>
+			<paramName>X0</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Counter</blkName>
+		<xpcblkName>Counter</xpcblkName>
+		<SLblockPath>speed2/Counter</SLblockPath>
+		<isSrc>[0 2 1]</isSrc>
+		<parameter>
+			<paramName>InitialCount</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Counter1</blkName>
+		<xpcblkName>Counter1</xpcblkName>
+		<SLblockPath>speed2/Counter1</SLblockPath>
+		<isSrc>[0 2 1]</isSrc>
+		<parameter>
+			<paramName>InitialCount</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Counter2</blkName>
+		<xpcblkName>Counter2</xpcblkName>
+		<SLblockPath>speed2/Counter2</SLblockPath>
+		<isSrc>[0 2 1]</isSrc>
+		<parameter>
+			<paramName>InitialCount</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>PCI-6024E AD</blkName>
+		<xpcblkName>PCI-6024E AD</xpcblkName>
+		<SLblockPath>speed2/PCI-6024E AD</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>P1</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P2</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P3</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P4</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P5</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P6</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>PCI-6024E DI</blkName>
+		<xpcblkName>PCI-6024E DI</xpcblkName>
+		<SLblockPath>speed2/PCI-6024E DI</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>P1</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P2</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P3</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P4</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P5</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>PCI-6024E DI1</blkName>
+		<xpcblkName>PCI-6024E DI1</xpcblkName>
+		<SLblockPath>speed2/PCI-6024E DI1</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>P1</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P2</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P3</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P4</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P5</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>PCI-6024E DO</blkName>
+		<xpcblkName>PCI-6024E DO</xpcblkName>
+		<SLblockPath>speed2/PCI-6024E DO</SLblockPath>
+		<isSrc>[0 1 0]</isSrc>
+		<parameter>
+			<paramName>P1</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P2</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P3</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P4</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P5</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P6</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>P7</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<block>
+		<blkName>Uniform Random
+Number</blkName>
+		<xpcblkName>Uniform Random Number</xpcblkName>
+		<SLblockPath>speed2/Uniform Random Number</SLblockPath>
+		<isSrc>[1 0 1]</isSrc>
+		<parameter>
+			<paramName>Minimum</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>Maximum</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+		<parameter>
+			<paramName>Seed</paramName>
+			<dim>[1, 1]</dim>
+		</parameter>
+	</block>
+	<signal>
+		<sigName>Data Type Conversion</sigName>
+		<xpcsigName>Data Type Conversion</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Pulse
+Generator</sigName>
+		<xpcsigName>Pulse Generator</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Gain</sigName>
+		<xpcsigName>Gain</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Gain1</sigName>
+		<xpcsigName>Gain1</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Gain2</sigName>
+		<xpcsigName>Gain2</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Memory</sigName>
+		<xpcsigName>Memory</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Memory1</sigName>
+		<xpcsigName>Memory1</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Divide</sigName>
+		<xpcsigName>Divide</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Divide1</sigName>
+		<xpcsigName>Divide1</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Divide2</sigName>
+		<xpcsigName>Divide2</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Divide3</sigName>
+		<xpcsigName>Divide3</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>multply</sigName>
+		<xpcsigName>multply</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>multply1</sigName>
+		<xpcsigName>multply1</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Counter</sigName>
+		<xpcsigName>Counter</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Counter1</sigName>
+		<xpcsigName>Counter1</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Counter2</sigName>
+		<xpcsigName>Counter2</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>PCI-6024E AD</sigName>
+		<xpcsigName>PCI-6024E AD</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>PCI-6024E DI</sigName>
+		<xpcsigName>PCI-6024E DI</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>PCI-6024E DI1</sigName>
+		<xpcsigName>PCI-6024E DI1</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Subtract</sigName>
+		<xpcsigName>Subtract</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Subtract1</sigName>
+		<xpcsigName>Subtract1</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Sum</sigName>
+		<xpcsigName>Sum</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+	<signal>
+		<sigName>Uniform Random
+Number</sigName>
+		<xpcsigName>Uniform Random Number</xpcsigName>
+		<sigWidth>1</sigWidth>
+		<sigDim>[1, 1]</sigDim>
+	</signal>
+</Root>

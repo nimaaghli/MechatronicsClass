@@ -1,0 +1,17 @@
+#include "speed2.bio"
+#include "speed2.lbl"
+#include "speed2.sid"
+
+
+const xpc_SigMappingInfo xpcMMI[] =
+  {
+    {
+      {speed2_BIO},
+      {speed2_SID},
+      {speed2_LBL},
+      "",
+      "speed2",
+      0,
+      30,
+    },
+  };

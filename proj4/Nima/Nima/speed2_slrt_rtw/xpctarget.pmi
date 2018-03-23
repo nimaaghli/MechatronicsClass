@@ -1,0 +1,14 @@
+#include "speed2.pt"
+
+
+const xpc_ParamMappingInfo  xpcparamsMMI[] =
+  {
+    {
+      {speed2_PT},
+      "speed2",
+      "",
+      "speed2",
+      0,
+      52,
+    },
+  };
